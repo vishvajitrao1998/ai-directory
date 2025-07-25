@@ -1,0 +1,47 @@
+ <!-- Navigation Header -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <!-- Brand Logo -->
+            <a class="navbar-brand fw-bold fs-3 text-black" href="/" id="brand-logo">
+                <i class="fas fa-robot text-primary me-2"></i>
+                Obtain.AI
+            </a>
+            
+            <!-- Mobile Toggle Button -->
+            <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- Navigation Menu -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tools">Browse Tools</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'tool_submission' %}">Submit Tool</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'remove_tool' %}">Remove Tool</a>
+                    </li>
+                </ul>
+                
+                <!-- Search Bar -->
+                <div class="d-flex align-items-center">
+                    <!-- Dark Mode Toggle -->
+                    <button class="btn btn-outline-secondary me-2" id="darkModeToggle" title="Toggle Dark Mode">
+                        <i class="fas fa-moon" id="darkModeIcon"></i>
+                    </button>
+                    
+                    <!-- Submit Tool Button -->
+                    <a href="{% url 'tool_submission' %}" class="btn btn-primary">
+                        <i class="fas fa-plus me-1"></i>
+                        Submit Tool
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>

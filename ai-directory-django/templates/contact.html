@@ -1,0 +1,44 @@
+<!-- Contact Section -->
+<section id="contact" class="py-5 contact">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h3 class="display-5 fw-bold mb-3">Get in Touch</h3>
+                <p class="lead text-muted mb-4">Have questions or need help with your AI tool listing?</p>
+                
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card border-0 h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-plus-circle text-primary display-6 mb-3"></i>
+                                <h5>Submit Tool</h5>
+                                <p class="text-muted">Advertise your AI tool with us</p>
+                                <a href="{% url 'tool_submission' %}" class="btn btn-primary">Submit Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card border-0 h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-trash-alt text-danger display-6 mb-3"></i>
+                                <h5>Remove Tool</h5>
+                                <p class="text-muted">Request removal of your tool</p>
+                                <a href="{% url 'remove_tool' %}" class="btn btn-outline-danger">Remove Tool</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card border-0 h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-envelope text-success display-6 mb-3"></i>
+                                <h5>Contact Support</h5>
+                                <p class="text-muted">Get help with any questions</p>
+                                <a href="mailto:support@aidirectory.com" class="btn btn-outline-success">Email Us</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

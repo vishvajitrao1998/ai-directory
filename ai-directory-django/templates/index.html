@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block menu %}
+{% include 'navbar.html' %}
+{% endblock %}
+
+    
+{% block hero_section %}
+{% include 'hero-section.html' %}
+{% endblock %}
+
+{% block tool_filter_section %}
+{% include 'filter.html' %}
+{% endblock %}
+
+{% block contact %}
+{% include 'contact.html' %}
+{% endblock %}
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock %}
+
+{% block modal %}
+{% include 'modal.html' %}
+{% endblock %}
+
+
+{% block js_file %}
+<!-- Custom JavaScript -->
+<script src="{% static 'js/app.js' %}"></script>
+{% endblock %}
+
+

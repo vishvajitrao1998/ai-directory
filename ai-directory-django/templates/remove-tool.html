@@ -1,0 +1,304 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block menu %}
+<!-- Navigation Header -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+    <div class="container">
+        <!-- Brand Logo -->
+        <a class="navbar-brand fw-bold fs-3 text-black" href="/" id="brand-logo">
+                <i class="fas fa-robot text-primary me-2"></i>
+                Obtain.AI
+        </a>
+
+        <!-- Mobile Toggle Button -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navigation Menu -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href="index.html#tools">Browse Tools</a>
+                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'tool_submission' %}">Submit Tool</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'remove_tool' %}">Remove Tool</a>
+                </li>
+            </ul>
+
+            <!-- Dark Mode Toggle -->
+            <button class="btn btn-outline-secondary me-2" id="darkModeToggle" title="Toggle Dark Mode">
+                <i class="fas fa-moon" id="darkModeIcon"></i>
+            </button>
+
+            <!-- Back to Directory Button -->
+            <a href="/" class="btn btn-primary">
+                <i class="fas fa-arrow-left me-1"></i>
+                Back to Directory
+            </a>
+        </div>
+    </div>
+</nav>
+
+{% endblock %}
+
+{% block contact %}
+
+<!-- Remove Tool Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Header -->
+                <div class="text-center mb-5">
+                    <h1 class="display-5 fw-bold mb-3">Remove AI Tool</h1>
+                    <p class="lead text-muted">Request removal of your AI tool from our directory</p>
+                </div>
+
+                <!-- Warning Alert -->
+                <div class="alert alert-warning d-flex align-items-center mb-5" role="alert">
+                    <i class="fas fa-exclamation-triangle me-3"></i>
+                    <div>
+                        <strong>Important:</strong> Tool removal is permanent and cannot be undone. Please ensure you
+                        want to proceed with this request.
+                    </div>
+                </div>
+
+                <!-- Remove Form -->
+                <div class="card shadow-sm">
+                    <div class="card-body p-5">
+                        <form id="removeToolForm" novalidate>
+                            <!-- Tool Identification -->
+                            <h4 class="mb-4">
+                                <i class="fas fa-search text-danger me-2"></i>
+                                Tool Identification
+                            </h4>
+
+                            <div class="mb-3">
+                                <label for="toolNameRemove" class="form-label">Tool Name *</label>
+                                <input type="text" class="form-control shadow-none" id="toolNameRemove"
+                                    name="toolNameRemove" placeholder="Enter the exact name of your tool" required>
+                                <div class="invalid-feedback">
+                                    Please provide the tool name.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="toolWebsiteRemove" class="form-label">Tool Website URL *</label>
+                                <input type="url" class="form-control shadow-none" id="toolWebsiteRemove"
+                                    name="toolWebsiteRemove" placeholder="https://example.com" required>
+                                <div class="invalid-feedback">
+                                    Please provide the tool website URL.
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="toolIdRemove" class="form-label">Tool ID (if known)</label>
+                                <input type="text" class="form-control shadow-none" id="toolIdRemove"
+                                    name="toolIdRemove" placeholder="Optional: Tool ID from our directory">
+                                <div class="form-text">You can find the tool ID in the URL when viewing your tool's
+                                    details</div>
+                            </div>
+
+                            <!-- Verification -->
+                            <h4 class="mb-4">
+                                <i class="fas fa-user-check text-danger me-2"></i>
+                                Ownership Verification
+                            </h4>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="ownerName" class="form-label">Your Name *</label>
+                                    <input type="text" class="form-control shadow-none" id="ownerName" name="ownerName"
+                                        required>
+                                    <div class="invalid-feedback">
+                                        Please provide your name.
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="ownerEmail" class="form-label">Email Address *</label>
+                                    <input type="email" class="form-control shadow-none" id="ownerEmail"
+                                        name="ownerEmail" required>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid email address.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="ownerCompany" class="form-label">Company/Organization</label>
+                                <input type="text" class="form-control shadow-none" id="ownerCompany"
+                                    name="ownerCompany" placeholder="Company or organization name">
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="verificationMethod" class="form-label">Verification Method *</label>
+                                <select class="form-select shadow-none" id="verificationMethod"
+                                    name="verificationMethod" required>
+                                    <option value="">Select verification method</option>
+                                    <option value="email">Email from domain owner</option>
+                                    <option value="website">Add verification code to website</option>
+                                    <option value="documentation">Provide ownership documentation</option>
+                                    <option value="original_submission">I was the original submitter</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a verification method.
+                                </div>
+                            </div>
+
+                            <!-- Reason for Removal -->
+                            <h4 class="mb-4">
+                                <i class="fas fa-comment-alt text-danger me-2"></i>
+                                Reason for Removal
+                            </h4>
+
+                            <div class="mb-3">
+                                <label for="removalReason" class="form-label">Reason for Removal *</label>
+                                <select class="form-select shadow-none" id="removalReason" name="removalReason"
+                                    required>
+                                    <option value="">Select a reason</option>
+                                    <option value="discontinued">Tool discontinued</option>
+                                    <option value="rebranding">Tool rebranding/name change</option>
+                                    <option value="privacy">Privacy concerns</option>
+                                    <option value="inaccurate">Inaccurate information</option>
+                                    <option value="duplicate">Duplicate listing</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a reason for removal.
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="additionalDetails" class="form-label">Additional Details</label>
+                                <textarea class="form-control shadow-none" id="additionalDetails"
+                                    name="additionalDetails" rows="4"
+                                    placeholder="Please provide any additional information that would help us process your removal request"></textarea>
+                            </div>
+
+                            <!-- Alternative Actions -->
+                            <div class="card bg-light border-0 mb-4">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <i class="fas fa-lightbulb text-warning me-2"></i>
+                                        Consider These Alternatives
+                                    </h5>
+                                    <ul class="mb-0">
+                                        <li>If your tool information is outdated, consider <a
+                                                href="mailto:support@aidirectory.com">updating your listing</a> instead
+                                        </li>
+                                        <li>If you're rebranding, we can help you <a
+                                                href="mailto:support@aidirectory.com">update your tool name and
+                                                details</a></li>
+                                        <li>If you have concerns about your listing, <a
+                                                href="mailto:support@aidirectory.com">contact our support team</a> first
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Confirmation -->
+                            <div class="mb-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="confirmOwnership"
+                                        name="confirmOwnership" required>
+                                    <label class="form-check-label" for="confirmOwnership">
+                                        I confirm that I am the owner or authorized representative of this AI tool *
+                                    </label>
+                                    <div class="invalid-feedback">
+                                        You must confirm ownership of the tool.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="confirmRemoval"
+                                        name="confirmRemoval" required>
+                                    <label class="form-check-label" for="confirmRemoval">
+                                        I understand that tool removal is permanent and cannot be undone *
+                                    </label>
+                                    <div class="invalid-feedback">
+                                        You must confirm that you understand the removal is permanent.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button type="button" class="btn btn-outline-secondary me-md-2"
+                                    onclick="window.history.back()">
+                                    <i class="fas fa-arrow-left me-2"></i>
+                                    Cancel
+                                </button>
+                                <button type="submit" class="btn btn-danger btn-lg">
+                                    <i class="fas fa-trash-alt me-2"></i>
+                                    Submit Removal Request
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Process Information -->
+                <div class="row mt-5">
+                    <div class="col-md-6">
+                        <div class="card border-0 review-section h-100">
+                            <div class="card-body">
+                                <h5><i class="fas fa-clock text-primary me-2"></i>Processing Time</h5>
+                                <p class="text-muted">Removal requests are typically processed within 1-2 business days
+                                    after ownership verification is complete.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card border-0 review-section h-100">
+                            <div class="card-body">
+                                <h5><i class="fas fa-shield-alt text-primary me-2"></i>Verification Required</h5>
+                                <p class="text-muted">We require ownership verification to prevent unauthorized removal
+                                    requests. Our team will contact you to complete the verification process.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
+
+{% block footer %}
+
+<!-- Footer -->
+<footer class="bg-dark text-white py-4">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <p class="mb-0">&copy; 2025 AI Directory. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <a href="index.html" class="text-light text-decoration-none me-3">Home</a>
+                <a href="#" class="text-light text-decoration-none me-3">Privacy</a>
+                <a href="#" class="text-light text-decoration-none">Terms</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+{% endblock %}
+
+
+{% block js_file %}
+<!-- Custom JavaScript -->
+<script src="{% static 'js/forms.js' %}"></script>
+{% endblock %}
