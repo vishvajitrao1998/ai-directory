@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block menu %}
+<!-- Navigation Header -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+    <div class="container">
+        <!-- Brand Logo -->
+        <a class="navbar-brand fw-bold fs-3 text-black" href="/" id="brand-logo">
+                <i class="fas fa-robot text-primary me-2"></i>
+                Obtain.AI
+        </a>
+
+        <!-- Mobile Toggle Button -->
+        <button class="navbar-toggler shadow-none navbar-toggler-btn" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navigation Menu -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href="index.html#tools">Browse Tools</a>
+                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'tool_submission' %}">Submit Tool</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'remove_tool' %}">Remove Tool</a>
+                </li>
+            </ul>
+
+            <!-- Dark Mode Toggle -->
+            <button class="btn btn-outline-secondary me-2" id="darkModeToggle" title="Toggle Dark Mode">
+                <i class="fas fa-moon" id="darkModeIcon"></i>
+            </button>
+
+            <!-- Back to Directory Button -->
+            <a href="/" class="btn btn-primary">
+                <i class="fas fa-arrow-left me-1"></i>
+                Back to Directory
+            </a>
+        </div>
+    </div>
+</nav>
+
+{% endblock %}
+
+{% block contact %}
+
+<!-- Remove Tool Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 mx-auto">
+                <!-- Header -->
+                <div class="text-center mb-5">
+                    <h1 class="display-5 fw-bold mb-3">Contact US</h1>
+                    <p class="lead text-muted">Contact us freely anything related to abtain.ai</p>
+                </div>
+
+                <!-- Remove Form -->
+                <div class="card shadow-sm">
+                    <div class="card-body p-5">
+                        <form id="contactUSForm" novalidate>
+                           <h4 class="mb-4">
+                                <i class="fas fa-user text-primary me-2"></i>
+                                Contact Information
+                            </h4>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="contactName" class="form-label">Your Name *</label>
+                                    <input type="text" class="form-control shadow-none" id="contactName"
+                                        name="name" placeholder="Enter your name" required>
+                                    <div class="invalid-feedback">
+                                        Please provide your name.
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="contactEmail" class="form-label">Email Address *</label>
+                                    <input type="email" class="form-control shadow-none" placeholder="Enter your email address" id="contactEmail"
+                                        name="email" required>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid email address.
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mt-3">
+                                    <label for="contactCountry" class="form-label">Your Country *</label>
+                                    <input type="text" class="form-control shadow-none" placeholder="Enter your country name" id="contactCountry"
+                                        name="country" required>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid country name.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="toolDetailedDescription" class="form-label">Detailed Description *</label>
+                                <textarea class="form-control shadow-none" id="toolDescription"
+                                    name="desc" rows="5"
+                                    placeholder="Write your concern here"
+                                    required></textarea>
+                                <div class="form-text">
+                                    <span id="descriptionCount">0</span>/400 characters
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide a detailed description.
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button type="button" class="btn btn-outline-secondary me-md-2"
+                                    onclick="window.history.back()">
+                                    <i class="fas fa-arrow-left me-2"></i>
+                                    Cancel
+                                </button>
+                                <button type="submit" class="btn btn-danger btn-lg">
+                                    Contact
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Process Information -->
+                <div class="row mt-5">
+                    <div class="col-md-6 mx-auto">
+                        <div class="card border-0 review-section h-100">
+                            <div class="card-body">
+                                <h5><i class="fas fa-clock text-primary me-2"></i>Processing Time</h5>
+                                <p class="text-muted">Contact requests are typically processed by our team within 1-2 business days.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Toast Container for Alerts -->
+<div class="toast-container"></div>
+{% endblock %}
+
+{% block footer %}
+
+<!-- Footer -->
+<footer class="bg-dark text-white py-4">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <p class="mb-0">&copy; 2025 AI Directory. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <a href="/" class="text-light text-decoration-none me-3">Home</a>
+                <a href="#" class="text-light text-decoration-none me-3">Privacy</a>
+                <a href="#" class="text-light text-decoration-none">Terms</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+{% endblock %}
+
+
+{% block js_file %}
+<!-- Custom JavaScript -->
+<script src="{% static 'js/contact.js' %}"></script>
+{% endblock %}

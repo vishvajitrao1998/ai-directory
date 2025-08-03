@@ -1,0 +1,105 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block menu %}
+{% include 'navbar.html' %}
+{% endblock %}
+
+{% block hero_section %}
+<div class="container mt-5 mb-5">
+    <div class="row shasdow-sm">
+        <div class="col-12">
+            <h1 class="card-title mb-4">Privacy Policy</h1>
+            <p class="text-muted">Last updated: July 25, 2025</p>
+
+            <p>
+                This Privacy Policy explains how AI Directory ("we", "our", or "us") collects, uses, and safeguards your
+                information when you use our website and services, including submitting and removing AI tools from our
+                directory.
+            </p>
+
+            <h3>1. Information We Collect</h3>
+            <p>We collect the following types of data:</p>
+            <ul>
+                <li><strong>Tool Submission Information:</strong> Basic information (tool name, description), features,
+                    tags, listing type (free or paid), and contact details.</li>
+                <li><strong>Removal Requests:</strong> Tool identifier, ownership verification data (e.g., email or
+                    website match), and reason for removal.</li>
+                <li><strong>Contact Data:</strong> Information submitted through the Contact Us page or support emails,
+                    such as your name and email address.</li>
+                <li><strong>Technical Information:</strong> Browser type, IP address, pages visited, and other usage
+                    data collected via cookies or analytics tools.</li>
+            </ul>
+
+            <h3>2. How We Use Your Information</h3>
+            <ul>
+                <li>To list, publish, update, or remove AI tools based on your submissions.</li>
+                <li>To communicate with you regarding tool listings or support inquiries.</li>
+                <li>To verify ownership during tool removal requests.</li>
+                <li>To process featured or premium listing payments (if applicable).</li>
+                <li>To improve the website, monitor usage, and enhance user experience.</li>
+            </ul>
+
+            <h3>3. Tool Ownership and Responsibility</h3>
+            <p>
+                Users are responsible for the accuracy, legality, and originality of any tool information they submit.
+                We reserve the right to remove or reject submissions that violate our guidelines.
+            </p>
+
+            <h3>4. Cookies and Analytics</h3>
+            <p>
+                We may use cookies or analytics tools (e.g., Google Analytics) to track site usage. You can manage
+                cookie preferences via your browser settings.
+            </p>
+
+            <h3>5. Payment Information</h3>
+            <p>
+                Payments for promoted listings are handled securely through third-party providers (such as Stripe or
+                PayPal). We do not store or process payment card details directly.
+            </p>
+
+            <h3>6. Data Retention</h3>
+            <p>
+                Submitted tool data is retained for as long as it is listed. Contact and removal data is retained only
+                as necessary for verification, support, and audit purposes.
+            </p>
+
+            <h3>7. Your Rights</h3>
+            <p>
+                You have the right to:
+            </p>
+            <ul>
+                <li>Request correction or deletion of your submitted tool.</li>
+                <li>Request a copy of the data you've submitted.</li>
+                <li>Withdraw your submission at any time by providing verification.</li>
+            </ul>
+
+            <h3>8. Contact and Support</h3>
+            <p>
+                If you have questions or concerns about this policy or your data, you can:
+            </p>
+            <ul>
+                <li>Use our <a href="/contact-us">Contact Us</a> page</li>
+                <li>Email us at: <a href="mailto:support@ai-directory.com">support@ai-directory.com</a></li>
+            </ul>
+
+            <h3>9. Changes to This Policy</h3>
+            <p>
+                We may update this Privacy Policy from time to time. The "Last Updated" date at the top of this page
+                indicates when it was last revised.
+            </p>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock %}
+
+
+{% block js_file %}
+<!-- Custom JavaScript -->
+<script src="{% static 'js/app.js' %}"></script>
+{% endblock %}

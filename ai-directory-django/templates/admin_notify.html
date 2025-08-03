@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .container {
+            background: rgb(239, 237, 237);
+            border-radius: 8px;
+            padding: 40px;
+            max-width: 500px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            background-color: #0f172a;
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+
+        .footer {
+            margin-top: 30px;
+            font-size: 13px;
+            color: #999;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Hello {{username}},</h2>
+        {% if email_type == 'for_tool_creation' %}
+        <p>We're excited to have you on board. Here's something awesome just for you 🎁.</p>
+        <div>
+            <p>This is your tool ref number and you can track the status of tool from here.</p>
+            <span class="btn" style="width: 5;">{{ref_number}}</span>
+        </div>
+        {% elif email_type == 'for_payment' %}
+        <p>We’re excited to let you know that your tool {{ref_number}} has been approved successfully.</p>
+        <p>There’s just one final step to go live — complete the payment using the link below.</p>
+        <a href="http://127.0.0.1:8000/submit-tool" style="display:inline-block;
+          margin-top:20px;
+          background-color:#4CAF50;
+          color:#ffffff;
+          padding:12px 20px;
+          text-decoration:none;
+          border-radius:5px;
+          font-weight:bold;">
+            Complete Payment
+        </a>
+        {% endif %}
+
+        <p style="margin-top: 30px;">
+            Regards,<br>
+            <strong>The Team</strong>
+        </p>
+        <table align="center" cellspacing="0" cellpadding="0" style="margin-top: 30px;">
+            <tr>
+                <td align="center" style="padding: 0 10px;">
+                    <a href="https://facebook.com/yourpage">
+                        <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" width="24"
+                            height="24" style="display: block;">
+                    </a>
+                </td>
+                <td align="center" style="padding: 0 10px;">
+                    <a href="https://twitter.com/yourhandle">
+                        <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter" width="24"
+                            height="24" style="display: block;">
+                    </a>
+                </td>
+                <td align="center" style="padding: 0 10px;">
+                    <a href="https://instagram.com/yourprofile">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" width="24"
+                            height="24" style="display: block;">
+                    </a>
+                </td>
+                <td align="center" style="padding: 0 10px;">
+                    <a href="https://linkedin.com/company/yourcompany">
+                        <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" width="24"
+                            height="24" style="display: block;">
+                    </a>
+                </td>
+            </tr>
+        </table>
+
+
+        <p class="footer">
+            If you have any questions, feel free to reply to this email.
+        </p>
+    </div>
+
+</body>
+
+</html>

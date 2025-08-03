@@ -30,7 +30,7 @@
                     <a class="nav-link" href="{% url 'tool_submission' %}">Submit Tool</a>
                 </li>
                 <li class="nav-item">
-                        <a class="nav-link" href="{% url 'advertisement' %}">Advertise</a>
+                    <a class="nav-link" href="{% url 'advertisement' %}">Advertise</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'update_tool' %}">Update Tool</a>
@@ -81,234 +81,89 @@
             <div class="col-lg-12">
                 <!-- Header -->
                 <div class="text-center mb-5">
-                    <h1 class="display-5 fw-bold mb-3">Submit Your AI Tool</h1>
-                    <p class="lead text-muted">Share your AI tool with our community and reach thousands of potential
-                        users</p>
-                </div>
-
-                <!-- Listing Types Info -->
-                <!-- <div class="row mb-5">
-                    <div class="col-md-4 mb-3">
-                        <div class="card h-100 border-0 bg-light">
-                            <div class="card-body text-center">
-                                <i class="fas fa-list-ul text-secondary display-6 mb-3"></i>
-                                <h5>Simple Listing</h5>
-                                <p class="text-muted small">Basic listing with standard features</p>
-                                <span class="badge bg-secondary">Free</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="card h-100 border-primary">
-                            <div class="card-body text-center">
-                                <i class="fas fa-check-circle text-primary display-6 mb-3"></i>
-                                <h5>Verified Listing</h5>
-                                <p class="text-muted small">Enhanced listing with verification badge</p>
-                                <span class="badge bg-primary">$29/month</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="card h-100 border-warning">
-                            <div class="card-body text-center">
-                                <i class="fas fa-star text-warning display-6 mb-3"></i>
-                                <h5>Featured Listing</h5>
-                                <p class="text-muted small">Premium placement and featured badge</p>
-                                <span class="badge bg-warning">$99/month</span>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-
-            </div>
-
-            <!-- Close -->
-
-            <!-- Pricing Section -->
-            <div class="text-center mb-5">
-                <h4 class="fw-bold">Our Pricing Plans</h4>
-                <p class="text-muted">Choose the plan that works best for you and your team</p>
-            </div>
-
-            <div class="row">
-                <!-- Basic Plan -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="pricing-card">
-                        <div class="pricing-header">
-                            <h5 class="fw-bold">Simple Listing</h5>
-                            <p class="price"><span class="price simple-listing-price"></span><span class="price-period">(One Time)</span></p>
-                            <p class="text-muted">Basic listing with standard features</p>
-                        </div>
-                        <div class="pricing-features">
-                            <div class="feature-item">
-                                <span class="feature-icon"><i class="fas fa-check-circle"></i></span>
-                                <span>Published withing 3 business days.</span>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon"><i class="fas fa-check-circle"></i></span>
-                                <span>Single Extra Link allow with your product.</span>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon"><i class="fas fa-check-circle"></i></span>
-                                <span>Tool will be listed in latest AI tools section.</span>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon"><i class="fas fa-check-circle"></i></span>
-                                <span>Email Support</span>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon"><i class="fas fa-check-circle"></i></span>
-                                <span>Description allowed up to 200 characters.</span>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon"><i class="fas fa-check-circle"></i></span>
-                                <span>30 days in "Obtain.AI Favorite" on Homepage</span>
-                            </div>
-                        </div>
-                        <!-- <div class="pricing-footer">
-                                <button class="btn btn-outline-primary btn-subscribe" data-plan="Basic">Subscribe Now</button>
-                            </div> -->
-                    </div>
-                </div>
-
-                <!-- Pro Plan -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="pricing-card">
-                        <div class="popular">Most Popular</div>
-                        <div class="pricing-header">
-                            <h5 class="fw-bold">Verified Listing</h5>
-                            <p class="price"><span class="price verified-listing-price"></span><span class="price-period">(One Time)</span></p>
-                            <p class="text-muted">Enhanced listing with verification badge</p>
-                        </div>
-                        <div class="pricing-features">
-                            <div class="feature-item">
-                                <span class="feature-icon"><i class="fas fa-check-circle"></i></span>
-                                <span>Published withing 2 business days.</span>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon"><i class="fas fa-check-circle"></i></span>
-                                <span>Verified icon <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                        fill="currentColor" class="bi bi-patch-check-fill verified-badge"
-                                        viewBox="0 0 16 16">
-                                        <path
-                                            d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708">
-                                        </path>
-                                    </svg> will be added for trust.</span>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon"><i class="fas fa-check-circle"></i></span>
-                                <span>3 Extra Links allow with your product.</span>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon"><i class="fas fa-check-circle"></i></span>
-                                <span>Tool will be listed in latest AI tools section.</span>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon"><i class="fas fa-check-circle"></i></span>
-                                <span>Priority Email Support</span>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon"><i class="fas fa-check-circle"></i></span>
-                                <span>Description of up to 400 characters</span>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon"><i class="fas fa-check-circle"></i></span>
-                                <span>45 days in "Obtain.AI Favorite" on Homepage</span>
-                            </div>
-                        </div>
-                        <!-- <div class="pricing-footer">
-                                <button class="btn btn-primary btn-subscribe" data-plan="Pro">Subscribe Now</button>
-                            </div> -->
-                    </div>
-                </div>
-                <!-- Featured Listing Plan -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="pricing-card">
-                        <div class="pricing-header">
-                            <h5 class="fw-bold">Featured Listing</h5>
-                            <p class="price"><span class="price featured-listing-price"></span><span class="price-period">(One Time)</span></p>
-                            <p class="text-muted">Premium placement and featured badge</p>
-                        </div>
-                        <div class="pricing-features">
-                            <div class="feature-item">
-                                <span class="feature-icon"><i class="fas fa-check-circle"></i></span>
-                                <span>Published withing 2 business days.</span>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon"><i class="fas fa-check-circle"></i></span>
-                                <span>Featured icon <i class="fas fa-star listing-featured" title="Featured"></i>
-                                    will be added.</span>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon"><i class="fas fa-check-circle"></i></span>
-                                <span>5 Extra Links allow with your product.</span>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon"><i class="fas fa-check-circle"></i></span>
-                                <span>Tool will be displayed everywhere.</span>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon"><i class="fas fa-check-circle"></i></span>
-                                <span>Priority Email Support and Phone Support.</span>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon"><i class="fas fa-check-circle"></i></span>
-                                <span>Description of up to 500 characters</span>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon"><i class="fas fa-check-circle"></i></span>
-                                <span>60 days in "Obtain.AI Favorite" on Homepage</span>
-                            </div>
-                        </div>
-                        <!-- <div class="pricing-footer">
-                                <button class="btn btn-outline-primary btn-subscribe" data-plan="Enterprise">Subscribe Now</button>
-                            </div> -->
-                    </div>
+                    <h1 class="display-5 fw-bold mb-3">Update Your AI Tool</h1>
+                    <p class="lead text-muted">Update Your AI tool information except tool link.</p>
                 </div>
             </div>
 
             <!-- Close -->
-
-
             <!-- Submit Form -->
             <div class="card shadow-sm">
                 <div class="card-body p-5">
+                    <h4 class="mb-4">
+                        <i class="fas fa-crown text-primary me-2"></i>
+                        Update Your AI Tool in Just <span id="updatePrice" class="text-primary">$5</span>
+                    </h4>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <form id="getToolInfo" novalidate class="my-2">
+                                <div class="d-flex justify-content-center gap-2">
+                                    <input type="text" class="form-control shadow-none" id="singleToolInfo"
+                                        name="toolName" placeholder="Enter Tool Reference Number to Fetch Details"
+                                        required>
+                                    <button type="submit" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-paper-plane me-2"></i>
+                                        Fetch
+                                    </button>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="">
+                        <div>
+                            <p>Would you like to upgrade your listing type?</p>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input shadow-none" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                                value="yes">
+                            <label class="form-check-label" for="inlineRadio1">Yes</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input shadow-none" type="radio" name="inlineRadioOptions" id="inlineRadioforNo"
+                                value="no" checked>
+                            <label class="form-check-label" for="inlineRadio2">No</label>
+                        </div>
+
+                        <div id="responseText" class="mt-4"></div>
+                    </div>
+
                     <form id="submitToolForm" novalidate>
                         <!-- Listing Type -->
-                        <h4 class="mb-4">
-                            <i class="fas fa-crown text-primary me-2"></i>
-                            Listing Type
-                        </h4>
-
-                        <div class="mb-4 px-5">
+                        <div class="mb-4 px-5" id="listingType">
                             <div class="row">
-                                <div class="col-md-4 mb-3">
+                                <!-- <div class="col-md-4 mb-3" id="simple-listing-type">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="listingType"
-                                            id="listingSimple" value="simple">
+                                            id="listingSimple" value="simple" checked>
                                         <label class="form-check-label" for="listingSimple">
                                             <strong>Simple Listing</strong><br>
-                                            <small class="text-muted"><span class="simple-listing-price"></span> (One time) for simple listing</small>
+                                            <small class="text-muted"><span class="simple-listing-price"></span> (One
+                                                time) for simple listing</small>
                                         </label>
                                     </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
+                                </div> -->
+                                <div class="col-md-4 mb-3" id="verified-listing-type">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="listingType"
-                                            id="listingVerified" value="verified" checked>
+                                            id="listingVerified" value="verified">
                                         <label class="form-check-label" for="listingVerified">
                                             <strong>Verified Listing</strong><br>
-                                            <small class="text-muted"><span class="verified-listing-price"></span> (One time) with verification badge</small>
+                                            <small class="text-muted"><span class="verified-listing-price"></span> (One
+                                                time) with verification badge</small>
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-4 mb-3" id="featured-listing-type">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="listingType"
                                             id="listingFeatured" value="featured">
                                         <label class="form-check-label" for="listingFeatured">
                                             <strong>Featured Listing</strong><br>
-                                            <small class="text-muted"><span class="featured-listing-price"></span> (One time) with featured listing</small>
+                                            <small class="text-muted"><span class="featured-listing-price"></span> (One
+                                                time) with featured listing</small>
                                         </label>
                                     </div>
                                 </div>
@@ -386,7 +241,7 @@
                             </div>
                         </div>
 
-                        <!-- <div class="mb-4">
+                        <div class="mb-4">
                             <label for="toolDetailedDescription" class="form-label">Detailed Description *</label>
                             <textarea class="form-control shadow-none" id="toolDetailedDescription"
                                 name="toolDetailedDescription" rows="5"
@@ -395,11 +250,12 @@
                             <div class="invalid-feedback">
                                 Please provide a detailed description.
                             </div>
-                        </div> -->
+                        </div>
 
                         <!-- Input container -->
                         <div class="mb-4">
-                            <label for="toolDetailedDescription" class="form-label">Add Your Tool Social Link</label>
+                            <label for="toolDetailedDescription" class="form-label">Add social links of your
+                                tool</label>
                             <div id="dynamicInputs"></div>
                         </div>
 
@@ -524,6 +380,9 @@
     </div>
     </div>
 </section>
+
+<!-- Toast Container for Alerts -->
+<div class="toast-container"></div>
 
 {% endblock %}
 

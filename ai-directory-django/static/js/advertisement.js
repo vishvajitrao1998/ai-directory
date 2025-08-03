@@ -10,7 +10,7 @@ class FormHandler {
         this.setupFormValidation();
         this.setupCharacterCounters(200);
         this.setupFormSubmissions();
-        this.renderInputs(2, 'verified');
+        this.renderInputs(1, 'simple');
         this.handleExtraLinks();
     }
 
@@ -37,7 +37,6 @@ class FormHandler {
             input.type = 'text';
             input.className = 'form-control shadow-none mb-2';
             input.placeholder = `Extra Link ${i}`;
-            input.name = `ExtraLink${i}`;
             inputContainer.appendChild(input);
         }
 
@@ -219,6 +218,7 @@ class FormHandler {
     async handleSubmitTool(form) {
         if (!form.checkValidity()) {
             form.classList.add('was-validated');
+            this.showAlert('Please fill in all required fields correctly.', 'danger');
             return;
         }
 
@@ -242,17 +242,17 @@ class FormHandler {
 
         try {
             // Simulate API call (replace with actual API endpoint)
-            const apiResponse = await this.simulateAPICall(toolData, 'submit');
+            await this.simulateAPICall(toolData, 'submit');
 
-            this.showSuccessModal('Obtain.AI',
-                `Thank you for submitting your AI tool. Our team will review your submission within 2-3 business days and notify you via email once it\'s approved.Your tool reference number is ${apiResponse.tool_ref_num}, please save it for future communication, Thanks`);
+            this.showSuccessModal('Tool Submitted Successfully!',
+                'Thank you for submitting your AI tool. Our team will review your submission within 2-3 business days and notify you via email once it\'s approved.');
 
             form.reset();
             form.classList.remove('was-validated');
 
         } catch (error) {
             console.error('Submission error:', error);
-            this.showSuccessModal('Obtain.AI', 'There was an error submitting your tool. Please try again later.');
+            this.showAlert('There was an error submitting your tool. Please try again later.', 'danger');
         } finally {
             submitBtn.disabled = false;
             submitBtn.innerHTML = originalText;
@@ -315,11 +315,10 @@ class FormHandler {
 
     async simulateAPICall(data, action) {
         try {
-            const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            data['user_timezone'] = userTimezone ? userTimezone : '';
             let endpoint, method;
+            console.log(action)
+            console.log(data)
             if (action === 'submit') {
-                console.log(data)
                 endpoint = '/api/submit/';
                 method = 'POST';
             } else if (action === 'remove') {
@@ -402,7 +401,7 @@ class FormHandler {
         modalDiv.innerHTML = `
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header text-white">
+                    <div class="modal-header bg-success text-white">
                         <h5 class="modal-title">Success</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>

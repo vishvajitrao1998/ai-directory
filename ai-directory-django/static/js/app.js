@@ -2,7 +2,6 @@
 
 class AIDirectory {
     constructor() {
-        console.log(this)
         this.tools = [];
         this.filteredTools = [];
         this.currentPage = 1;
@@ -31,10 +30,8 @@ class AIDirectory {
         try {
             const response = await fetch('/api/tools/');
             const data = await response.json();
-            console.log(data.response)
             if (data.success) {
                 this.tools = data.tools;
-                console.log(this.tools)
                 this.filteredTools = [...this.tools];
             } else {
                 console.error('API Error:', data.error);
@@ -394,9 +391,7 @@ class AIDirectory {
 
     // Show tool details in modal
     showToolDetails(toolId) {
-        console.log(this.tools)
         const tool = this.tools.find(t => t.id == toolId);
-        console.log(tool)
         if (!tool) return;
 
         const modal = document.getElementById('toolDetailModal');
@@ -458,7 +453,6 @@ class AIDirectory {
         }
 
         // Show modal
-        console.log(modal)
         const bsModal = new bootstrap.Modal(modal);
         bsModal.show();
     }
@@ -527,10 +521,6 @@ class AIDirectory {
                 </a>
             </li>
         `;
-
-        console.log(paginationHTML)
-
-
         pagination.innerHTML = paginationHTML;
     }
 

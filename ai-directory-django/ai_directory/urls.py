@@ -63,7 +63,7 @@ def serve_frontend(request, path=''):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('tools.urls')),
+    # path('api/', include('tools.urls')),
     # path('<path:path>', serve_frontend, name='serve_frontend'),
     path('', include('tools.urls'), name='serve_frontend_roots'),
 ]

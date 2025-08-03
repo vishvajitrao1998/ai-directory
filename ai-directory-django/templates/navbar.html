@@ -4,11 +4,11 @@
             <!-- Brand Logo -->
             <a class="navbar-brand fw-bold fs-3 text-black" href="/" id="brand-logo">
                 <i class="fas fa-robot text-primary me-2"></i>
-                Obtain.AI
+                ToolBrain.AI
             </a>
             
             <!-- Mobile Toggle Button -->
-            <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler shadow-none navbar-toggler-btn" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             
@@ -25,8 +25,12 @@
                         <a class="nav-link" href="{% url 'tool_submission' %}">Submit Tool</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'remove_tool' %}">Remove Tool</a>
+                        <a class="nav-link" href="{% url 'advertisement' %}">Advertise</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'update_tool' %}">Update Tool</a>
+                    </li>
+                    
                 </ul>
                 
                 <!-- Search Bar -->

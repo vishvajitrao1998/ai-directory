@@ -1,128 +1,128 @@
 <!-- Filter and Tools Section -->
-    <section id="tools" class="py-5">
-        <div class="container">
-            <!-- Section Header -->
-            <div class="row mb-5">
-                <div class="col-12 text-center">
-                    <h2 class="display-5 fw-bold mb-3">Browse AI Tools</h2>
-                    <p class="lead text-muted">Filter and discover tools that match your needs</p>
+<section id="tools" class="py-5">
+    <div class="container">
+        <!-- Section Header -->
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h2 class="display-5 fw-bold mb-3">Browse AI Tools</h2>
+                <p class="lead text-muted">Filter and discover tools that match your needs</p>
+            </div>
+        </div>
+
+        <!-- Filters Row -->
+        <div class="row mb-4">
+            <div class="col-12 mb-3">
+                <div class="search-container">
+                    <input type="text" class="form-control search-input shadow-none" id="searchInput" placeholder="Search AI tools by Category or Tag">
+                    <i class="fas fa-search search-icon"></i>
                 </div>
             </div>
-
-            <!-- Filters Row -->
-            <div class="row mb-4">
-                <div class="col-12 mb-3">
-                    <div class="search-container">
-                        <input type="text" class="form-control search-input shadow-none" id="searchInput" placeholder="Search AI tools by Category or Tag">
-                        <i class="fas fa-search search-icon"></i>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="filters-container bg-light rounded p-4">
-                        <div class="row g-3">
-                            <!-- Category Filter -->
-                            <div class="col-md-3">
-                                <label class="form-label fw-semibold">Category</label>
-                                <select class="form-select shadow-none" id="categoryFilter">
-                                    <option value="">All Categories</option>
-                                    <option value="text-generation">Text Generation</option>
-                                    <option value="image-generation">Image Generation</option>
-                                    <option value="video-editing">Video Editing</option>
-                                    <option value="audio-processing">Audio Processing</option>
-                                    <option value="data-analysis">Data Analysis</option>
-                                    <option value="productivity">Productivity</option>
-                                    <option value="development">Development</option>
-                                    <option value="marketing">Marketing</option>
-                                </select>
-                            </div>
-                            
-                            <!-- Pricing Filter -->
-                            <div class="col-md-3">
-                                <label class="form-label fw-semibold">Pricing</label>
-                                <select class="form-select shadow-none" id="pricingFilter">
-                                    <option value="">All Pricing</option>
-                                    <option value="free">Free</option>
-                                    <option value="paid">Paid</option>
-                                    <option value="freemium">Freemium</option>
-                                    <option value="open_source">Open Source</option>
-                                </select>
-                            </div>
-                            
-                            <!-- Listing Type Filter -->
-                            <div class="col-md-3">
-                                <label class="form-label fw-semibold">Listing Type</label>
-                                <select class="form-select shadow-none" id="listingTypeFilter">
-                                    <option value="">All Types</option>
-                                    <option value="simple">Simple</option>
-                                    <option value="verified">Verified</option>
-                                    <option value="featured">Featured</option>
-                                </select>
-                            </div>
-                            
-                            <!-- Clear Filters -->
-                            <div class="col-md-3 d-flex align-items-end">
-                                <button class="btn btn-outline-secondary w-100" id="clearFilters">
-                                    <i class="fas fa-times me-2"></i>
-                                    Clear Filters
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Search Results Info -->
-            <div class="row mb-3">
-                <div class="col-12">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div id="resultsInfo" class="text-muted">
-                            Showing <span id="resultsCount">0</span> tools
-                        </div>
-                        <div class="sort-options">
-                            <select class="form-select form-select-sm shadow-none" id="sortBy">
-                                <option value="name">Sort by Name</option>
-                                <option value="date">Sort by Date Added</option>
-                                <option value="rating">Sort by Rating</option>
-                                <option value="category">Sort by Category</option>
+            <div class="col-12">
+                <div class="filters-container bg-light rounded p-4">
+                    <div class="row g-3">
+                        <!-- Category Filter -->
+                        <div class="col-md-3">
+                            <label class="form-label fw-semibold">Category</label>
+                            <select class="form-select shadow-none" id="categoryFilter">
+                                <option value="">All Categories</option>
+                                <option value="text-generation">Text Generation</option>
+                                <option value="image-generation">Image Generation</option>
+                                <option value="video-editing">Video Editing</option>
+                                <option value="audio-processing">Audio Processing</option>
+                                <option value="data-analysis">Data Analysis</option>
+                                <option value="productivity">Productivity</option>
+                                <option value="development">Development</option>
+                                <option value="marketing">Marketing</option>
                             </select>
                         </div>
+                        
+                        <!-- Pricing Filter -->
+                        <div class="col-md-3">
+                            <label class="form-label fw-semibold">Pricing</label>
+                            <select class="form-select shadow-none" id="pricingFilter">
+                                <option value="">All Pricing</option>
+                                <option value="free">Free</option>
+                                <option value="paid">Paid</option>
+                                <option value="freemium">Freemium</option>
+                                <option value="open_source">Open Source</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Listing Type Filter -->
+                        <div class="col-md-3">
+                            <label class="form-label fw-semibold">Listing Type</label>
+                            <select class="form-select shadow-none" id="listingTypeFilter">
+                                <option value="">All Types</option>
+                                <option value="simple">Simple</option>
+                                <option value="verified">Verified</option>
+                                <option value="featured">Featured</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Clear Filters -->
+                        <div class="col-md-3 d-flex align-items-end">
+                            <button class="btn btn-outline-secondary w-100" id="clearFilters">
+                                <i class="fas fa-times me-2"></i>
+                                Clear Filters
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Tools Grid -->
-            <div class="row" id="toolsGrid">
-                <!-- Tool cards will be dynamically inserted here -->
-            </div>
-
-            <!-- Loading Spinner -->
-            <div class="row" id="loadingSpinner" style="display: none;">
-                <div class="col-12 text-center py-5">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                    <p class="mt-3 text-muted">Loading AI tools...</p>
-                </div>
-            </div>
-
-            <!-- No Results Message -->
-            <div class="row" id="noResults" style="display: none;">
-                <div class="col-12 text-center py-5">
-                    <i class="fas fa-search display-4 text-muted mb-3"></i>
-                    <h4 class="text-muted">No tools found</h4>
-                    <p class="text-muted">Try adjusting your filters or search terms</p>
-                </div>
-            </div>
-
-            <!-- Pagination -->
-            <div class="row mt-5">
-                <div class="col-12">
-                    <nav aria-label="Tools pagination">
-                        <ul class="pagination justify-content-center" id="pagination">
-                            <!-- Pagination will be dynamically generated -->
-                        </ul>
-                    </nav>
                 </div>
             </div>
         </div>
-    </section>
+
+        <!-- Search Results Info -->
+        <div class="row mb-3">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div id="resultsInfo" class="text-muted">
+                        Showing <span id="resultsCount">0</span> tools
+                    </div>
+                    <div class="sort-options">
+                        <select class="form-select form-select-sm shadow-none" id="sortBy">
+                            <option value="name">Sort by Name</option>
+                            <option value="date">Sort by Date Added</option>
+                            <option value="rating">Sort by Rating</option>
+                            <option value="category">Sort by Category</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tools Grid -->
+        <div class="row" id="toolsGrid">
+            <!-- Tool cards will be dynamically inserted here -->
+        </div>
+
+        <!-- Loading Spinner -->
+        <div class="row" id="loadingSpinner" style="display: none;">
+            <div class="col-12 text-center py-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-3 text-muted">Loading AI tools...</p>
+            </div>
+        </div>
+
+        <!-- No Results Message -->
+        <div class="row" id="noResults" style="display: none;">
+            <div class="col-12 text-center py-5">
+                <i class="fas fa-search display-4 text-muted mb-3"></i>
+                <h4 class="text-muted">No tools found</h4>
+                <p class="text-muted">Try adjusting your filters or search terms</p>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <nav aria-label="Tools pagination">
+                    <ul class="pagination justify-content-center" id="pagination">
+                        <!-- Pagination will be dynamically generated -->
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>

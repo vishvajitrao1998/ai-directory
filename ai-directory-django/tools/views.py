@@ -6,7 +6,62 @@ from django.db.models import Q, Count
 from django.utils import timezone
 from django.shortcuts import get_object_or_404, render
 import json
-from .models import AITool, ToolSubmission, ToolRemovalRequest
+from .models import *
+from .utility import *
+
+
+@require_http_methods(["GET"])
+def get_currency_list(request):
+    currencies = Currency.objects.all()
+    data = [c.to_dict() for c in currencies]
+    return JsonResponse({"currencies": data})
+
+@require_http_methods(["GET"])
+def get_prices_by_currency(request):
+    currency = request.GET.get("currency")
+    data = []
+    if not currency:
+        return JsonResponse({"error": "currency parameter is required"}, status=400)
+
+    prices = ListingPlanPrice.objects.filter(currency=currency, is_active=True).values('currency__currency_code', 'currency__symbol', 'price', 'pricing_plan__plan_name')
+    for d in prices:
+        data.append (
+            {
+                'code': d.get('currency__currency_code'),
+                'plan_name': d.get('pricing_plan__plan_name'),
+                'symbol': d.get('currency__symbol'),
+                'price': int(d.get('price')),
+                'formated_price': f"{d.get('currency__symbol')}{int(d.get('price'))}"
+            }
+        )
+    return JsonResponse({"prices": data})
+
+
+
+@require_http_methods(["GET"])
+def get_prices_by_currency_advertise(request):
+    currency = request.GET.get("currency")
+    data = []
+    if not currency:
+        return JsonResponse({"error": "currency parameter is required"}, status=400)
+
+    prices = AdvertisementPlanPrice.objects.filter(currency=currency, is_active=True).values('currency__currency_code', 'currency__symbol', 'price', 'pricing_plan__plan_name', 'pricing_plan__plan_duration')
+    for d in prices:
+        data.append (
+            {
+                'code': d.get('currency__currency_code'),
+                'plan_name': d.get('pricing_plan__plan_name'),
+                'plan_duration': d.get('pricing_plan__plan_duration'),
+                'symbol': d.get('currency__symbol'),
+                'price': int(d.get('price')),
+                'formated_price': f"{d.get('currency__symbol')}{int(d.get('price'))}"
+            }
+        )
+    print(data)
+    return JsonResponse({"prices": data})
+
+
+
 
 
 @require_http_methods(["GET"])
@@ -73,12 +128,13 @@ def get_tools(request):
             'success': False,
             'error': str(e)
         }, status=500)
-
+    
 
 @require_http_methods(["GET"])
 def get_tool(request, tool_id):
     """Get single AI tool by ID"""
     try:
+        print(tool_id)
         tool = get_object_or_404(AITool, id=tool_id, is_active=True)
         return JsonResponse({
             'success': True,
@@ -86,6 +142,7 @@ def get_tool(request, tool_id):
         })
         
     except Exception as e:
+        print(e)
         return JsonResponse({
             'success': False,
             'error': str(e)
@@ -144,6 +201,7 @@ def submit_tool(request):
     """Submit new tool"""
     try:
         data = json.loads(request.body)
+        tool_ref_num = generate_application_reference()
         
         # Validate required fields
         required_fields = [
@@ -166,15 +224,27 @@ def submit_tool(request):
         tags = []
         if data.get('toolTags'):
             tags = [t.strip() for t in data['toolTags'].split(',') if t.strip()]
-        
+
+        extra_links = []
+        if data.get('ExtraLink1'):
+            extra_links.append(data.get('ExtraLink1'))
+        if data.get('ExtraLink2'):
+            extra_links.append(data.get('ExtraLink2'))
+        if data.get('ExtraLink3'):
+            extra_links.append(data.get('ExtraLink3'))
+
+        extraLinks = ','.join(extra_links)
+
         # Create submission record
         submission = ToolSubmission.objects.create(
             tool_name=data['toolName'],
+            tool_ref_num=tool_ref_num,
             tool_website=data['toolWebsite'],
+            user_timezone = data['user_timezone'],
+            extra_links=extraLinks,
             tool_category=data['toolCategory'],
             tool_pricing=data['toolPricing'],
             tool_description=data['toolDescription'],
-            tool_detailed_description=data.get('toolDetailedDescription', ''),
             tool_features=json.dumps(features) if features else None,
             tool_tags=json.dumps(tags) if tags else None,
             listing_type=data.get('listingType', 'simple'),
@@ -182,11 +252,14 @@ def submit_tool(request):
             contact_email=data['contactEmail'],
             contact_company=data.get('contactCompany', '')
         )
-        
+
+        # Code to send email to the user and admin to notify a new tool is requested
+        sendMail = send_mail(data['contactEmail'], tool_ref_num, data['contactName'], 'for_tool_creation')
         return JsonResponse({
             'success': True,
             'message': 'Tool submission received successfully',
-            'submission_id': submission.id
+            'submission_id': submission.id,
+            'tool_ref_num': tool_ref_num
         })
         
     except Exception as e:
@@ -428,11 +501,45 @@ def init_sample_data(request):
 
 
 
-# HTML Page Server
-# import os
-# from django.conf import settings
-# static_dir = os.path.join(settings.BASE_DIR, 'static')
-# print('static_dir', static_dir)
+@csrf_exempt
+@require_http_methods(["POST"])
+def contact_us(request):
+    """Submit Contact"""
+    try:
+        data = json.loads(request.body)
+        
+        # Validate required fields
+        required_fields = [
+            'name', 'email', 'desc'
+        ]
+        for field in required_fields:
+            if not data.get(field):
+                return JsonResponse({
+                    'success': False,
+                    'error': f'Missing required field: {field}'
+                }, status=400)
+        
+        # Create submission record
+        submission = ContactUs.objects.create(
+            name=data['name'],
+            email=data['email'],
+            country=data['country'],
+            desc=data['desc'],
+        )
+    
+        return JsonResponse({
+            'success': True,
+            'message': 'Contact saved successfully',
+            'submission_id': submission.id
+        })
+        
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        }, status=500)
+
+
 def home(request):
     return render(request, 'index.html')
 
@@ -442,3 +549,23 @@ def tool_submission(request):
 
 def remove_tool(request):
     return render(request, 'remove-tool.html')
+
+def update_tool(request):
+    return render(request, 'update-tool.html')
+
+
+def advertisement(request):
+    return render(request, 'advertisement.html')
+
+
+# pages
+def privacy_policy(request):
+    return render(request, 'privacy-policy.html')
+
+def contact(request):
+    return render(request, 'contact-form.html')
+
+
+def working(request):
+    return render(request, 'working.html')
+

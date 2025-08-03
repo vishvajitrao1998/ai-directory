@@ -7,54 +7,16 @@ class FormHandler {
 
     init() {
         this.setupDarkMode();
-        this.setupFormValidation();
-        this.setupCharacterCounters(200);
+        // this.setupFormValidation();
+        this.setupCharacterCounters();
         this.setupFormSubmissions();
-        this.renderInputs(2, 'verified');
-        this.handleExtraLinks();
     }
-
-    handleExtraLinks() {
-        const radioButtons = document.querySelectorAll('input[name="listingType"]');
-        radioButtons.forEach(radio => {
-            
-            radio.addEventListener('change', () => {
-                if (radio.checked) {
-                    if (radio.value === 'simple') this.renderInputs(1, 'simple');
-                    else if (radio.value === 'verified') this.renderInputs(2, 'verified');
-                    else if (radio.value === 'featured') this.renderInputs(3, 'featured');
-                }
-            });
-        });
-    }
-
-    // Extera Links - Add input box
-    renderInputs(count, radio_value) {
-        const inputContainer = document.getElementById('dynamicInputs');
-        inputContainer.innerHTML = ''; // Clear existing
-        for (let i = 1; i <= count; i++) {
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.className = 'form-control shadow-none mb-2';
-            input.placeholder = `Extra Link ${i}`;
-            input.name = `ExtraLink${i}`;
-            inputContainer.appendChild(input);
-        }
-
-        if (radio_value === 'simple') this.setupCharacterCounters(200);
-            else if (radio_value === 'verified') this.setupCharacterCounters(400);
-            else if (radio_value === 'featured') this.setupCharacterCounters(500);
-    }
-
-
-
-    // Close
 
     // Dark mode functionality (shared with main app)
     setupDarkMode() {
         const savedTheme = localStorage.getItem('theme');
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
+        
         if (savedTheme) {
             this.setTheme(savedTheme);
         } else if (systemPrefersDark) {
@@ -78,18 +40,18 @@ class FormHandler {
     setTheme(theme) {
         document.documentElement.setAttribute('data-bs-theme', theme);
         localStorage.setItem('theme', theme);
-
+        
         const darkModeIcon = document.getElementById('darkModeIcon');
         if (darkModeIcon) {
             darkModeIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
         }
     }
 
-    // Form validation setup
+    // Form validation setup Not in use
     setupFormValidation() {
         // Bootstrap form validation
         const forms = document.querySelectorAll('.needs-validation, form[novalidate]');
-
+        
         Array.from(forms).forEach(form => {
             form.addEventListener('submit', (event) => {
                 if (!form.checkValidity()) {
@@ -133,7 +95,7 @@ class FormHandler {
     validateURL(input) {
         const urlPattern = /^https?:\/\/.+\..+/;
         const isValid = urlPattern.test(input.value) || input.value === '';
-
+        
         if (!isValid && input.value !== '') {
             input.setCustomValidity('Please enter a valid URL starting with http:// or https://');
         } else {
@@ -144,9 +106,9 @@ class FormHandler {
     validateEmail(input) {
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const isValid = emailPattern.test(input.value) || input.value === '';
-
+        
         if (!isValid && input.value !== '') {
-            input.setCustomValidity('Please enter a valid email address');
+            input.setCustomValidity('Please enter a valid email addhgkgkghress');
         } else {
             input.setCustomValidity('');
         }
@@ -168,23 +130,19 @@ class FormHandler {
         }
     }
 
+    // Close 
+
+
     // Character counters
-    setupCharacterCounters(totalChars) {
+    setupCharacterCounters() {
         const descriptionTextarea = document.getElementById('toolDescription');
         const descriptionCounter = document.getElementById('descriptionCount');
-        const totalCharsCount = document.getElementById('totalCharsCount');
-        descriptionTextarea.value = '';
-        descriptionCounter.textContent = '0';
-        descriptionTextarea.placeholder = `Brief description of your AI tool (max ${totalChars} characters)`;
-        // descriptionTextarea.maxLength = `${totalChars}`;
-        totalCharsCount.textContent = `/${totalChars} characters`
-
         if (descriptionTextarea && descriptionCounter) {
             descriptionTextarea.addEventListener('input', () => {
                 const count = descriptionTextarea.value.length;
                 descriptionCounter.textContent = count;
-
-                if (count > totalChars) {
+                
+                if (count > 400) {
                     descriptionCounter.classList.add('text-danger');
                     descriptionTextarea.classList.add('is-invalid');
                 } else {
@@ -197,87 +155,36 @@ class FormHandler {
 
     // Form submissions
     setupFormSubmissions() {
-        // Submit tool form
-        const submitToolForm = document.getElementById('submitToolForm');
-        if (submitToolForm) {
-            submitToolForm.addEventListener('submit', (e) => {
+        // contact us form description
+        const contactUSForm = document.getElementById('contactUSForm');
+        if (contactUSForm) {
+            contactUSForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-                this.handleSubmitTool(submitToolForm);
-            });
-        }
-
-        // Remove tool form
-        const removeToolForm = document.getElementById('removeToolForm');
-        if (removeToolForm) {
-            removeToolForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                this.handleRemoveTool(removeToolForm);
+                this.handleContactSubmit(contactUSForm);
             });
         }
     }
 
-    async handleSubmitTool(form) {
+    async handleContactSubmit(form) {
+        console.log(form.checkValidity())
         if (!form.checkValidity()) {
             form.classList.add('was-validated');
+            // this.showAlert('Please fill in all required fields correctly.', 'danger');
             return;
         }
 
         const formData = new FormData(form);
-        const toolData = this.formDataToObject(formData);
-
-        // Process features and tags
-        if (toolData.toolFeatures) {
-            toolData.features = toolData.toolFeatures.split('\n').filter(f => f.trim());
-        }
-
-        if (toolData.toolTags) {
-            toolData.tags = toolData.toolTags.split(',').map(t => t.trim()).filter(t => t);
-        }
-
-        // Show loading state
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Submitting...';
-
-        try {
-            // Simulate API call (replace with actual API endpoint)
-            const apiResponse = await this.simulateAPICall(toolData, 'submit');
-
-            this.showSuccessModal('Obtain.AI',
-                `Thank you for submitting your AI tool. Our team will review your submission within 2-3 business days and notify you via email once it\'s approved.Your tool reference number is ${apiResponse.tool_ref_num}, please save it for future communication, Thanks`);
-
-            form.reset();
-            form.classList.remove('was-validated');
-
-        } catch (error) {
-            console.error('Submission error:', error);
-            this.showSuccessModal('Obtain.AI', 'There was an error submitting your tool. Please try again later.');
-        } finally {
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = originalText;
-        }
-    }
-
-    async handleRemoveTool(form) {
-        if (!form.checkValidity()) {
-            form.classList.add('was-validated');
-            this.showAlert('Please fill in all required fields correctly.', 'danger');
-            return;
-        }
-
-        const formData = new FormData(form);
-        const removalData = this.formDataToObject(formData);
-
+        const contactlData = this.formDataToObject(formData);
+        console.log(contactlData)
         // Show confirmation modal
-        const confirmed = await this.showConfirmationModal(
-            'Confirm Tool Removal',
-            'Are you sure you want to request removal of this tool? This action cannot be undone.',
-            'Remove Tool',
-            'btn-danger'
-        );
+        // const confirmed = await this.showConfirmationModal(
+        //     'Confirm Tool Removal',
+        //     'Are you sure you want to request removal of this tool? This action cannot be undone.',
+        //     'Remove Tool',
+        //     'btn-danger'
+        // );
 
-        if (!confirmed) return;
+        // if (!confirmed) return;
 
         // Show loading state
         const submitBtn = form.querySelector('button[type="submit"]');
@@ -287,14 +194,12 @@ class FormHandler {
 
         try {
             // Simulate API call (replace with actual API endpoint)
-            await this.simulateAPICall(removalData, 'remove');
-
-            this.showSuccessModal('Removal Request Submitted',
-                'Your tool removal request has been submitted. Our team will verify ownership and process your request within 1-2 business days.');
-
+            await this.simulateAPICall(contactlData, 'contact');
+            this.showSubscribeAlert();
+            
             form.reset();
             form.classList.remove('was-validated');
-
+            
         } catch (error) {
             console.error('Removal error:', error);
             this.showAlert('There was an error processing your removal request. Please try again later.', 'danger');
@@ -315,20 +220,23 @@ class FormHandler {
 
     async simulateAPICall(data, action) {
         try {
-            const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            data['user_timezone'] = userTimezone ? userTimezone : '';
             let endpoint, method;
+            console.log(action)
+            console.log(data)
             if (action === 'submit') {
-                console.log(data)
                 endpoint = '/api/submit/';
                 method = 'POST';
             } else if (action === 'remove') {
                 endpoint = '/api/remove/';
                 method = 'POST';
-            } else {
+            } else if (action === 'contact') {
+                endpoint = '/api/contact/';
+                method = 'POST';
+            }
+            else {
                 throw new Error('Invalid action');
             }
-
+            
             const response = await fetch(endpoint, {
                 method: method,
                 headers: {
@@ -336,21 +244,23 @@ class FormHandler {
                 },
                 body: JSON.stringify(data)
             });
-
+            
             const result = await response.json();
-
+            
             if (!response.ok || !result.success) {
                 throw new Error(result.error || 'API request failed');
             }
-
+            
             return result;
-
+            
         } catch (error) {
             console.error(`${action} API error:`, error);
             throw error;
         }
     }
 
+
+    // Not in use
     showAlert(message, type = 'info') {
         // Remove existing alerts
         const existingAlerts = document.querySelectorAll('.alert-dynamic');
@@ -368,7 +278,7 @@ class FormHandler {
         const container = document.querySelector('.container');
         if (container) {
             container.insertBefore(alertDiv, container.firstChild);
-
+            
             // Auto-dismiss after 5 seconds
             setTimeout(() => {
                 if (alertDiv.parentNode) {
@@ -402,7 +312,7 @@ class FormHandler {
         modalDiv.innerHTML = `
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header text-white">
+                    <div class="modal-header bg-success text-white">
                         <h5 class="modal-title">Success</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>
@@ -486,6 +396,46 @@ class FormHandler {
         `;
         return modalDiv;
     }
+
+    // Close 
+
+    // Function to show success or failure alert
+    showSubscribeAlert(plan='Obtain.AI') {
+        // Create toast element
+        const toastEl = document.createElement('div');
+        toastEl.className = 'toast';
+        toastEl.setAttribute('role', 'alert');
+        toastEl.setAttribute('aria-live', 'assertive');
+        toastEl.setAttribute('aria-atomic', 'true');
+        
+        toastEl.innerHTML = `
+            <div class="toast-header bg-primary text-white">
+                <strong class="me-auto">Obtain.AI</strong>
+                <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                <p>Thank you for subscribing to our <strong>${plan}</strong> plan!</p>
+                <p class="mb-0">Our team will contact you shortly with next steps.</p>
+            </div>
+        `;
+        
+        // Add toast to container
+        const toastContainer = document.querySelector('.toast-container');
+        toastContainer.appendChild(toastEl);
+        
+        // Initialize and show toast
+        const toast = new bootstrap.Toast(toastEl, {
+            autohide: true,
+            delay: 5000
+        });
+        toast.show();
+        
+        // Remove toast from DOM after it's hidden
+        toastEl.addEventListener('hidden.bs.toast', function() {
+            toastEl.remove();
+        });
+    }
+    // close
 }
 
 // Initialize form handler when DOM is loaded
@@ -498,7 +448,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Auto-resize textareas
     const textareas = document.querySelectorAll('textarea');
     textareas.forEach(textarea => {
-        textarea.addEventListener('input', function () {
+        textarea.addEventListener('input', function() {
             this.style.height = 'auto';
             this.style.height = this.scrollHeight + 'px';
         });
@@ -507,16 +457,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Form field animations
     const formControls = document.querySelectorAll('.form-control, .form-select');
     formControls.forEach(control => {
-        control.addEventListener('focus', function () {
+        control.addEventListener('focus', function() {
             this.parentElement.classList.add('focused');
         });
-
-        control.addEventListener('blur', function () {
+        
+        control.addEventListener('blur', function() {
             if (!this.value) {
                 this.parentElement.classList.remove('focused');
             }
         });
-
+        
         // Check if field has value on load
         if (control.value) {
             control.parentElement.classList.add('focused');
