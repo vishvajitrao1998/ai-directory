@@ -1,0 +1,284 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Update Tool - AI Directory{% endblock %}
+{% block page_title %}Update Tool{% endblock %}
+
+{% block content %}
+<div class="fade-in-up">
+    <!-- Header Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="me-3">
+                            <div class="bg-warning rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                                <i class="fas fa-edit text-white fa-2x"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h2 class="h3 mb-2">Update Tool: {{ tool.name }}</h2>
+                            <p class="text-muted mb-0">Make changes to your AI tool information</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Update Form -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Tool Information</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <div class="mb-4">
+                            <label for="name" class="form-label">Tool Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="name" name="name" required 
+                                   value="{{ tool.name }}" placeholder="Enter your AI tool name">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="description" class="form-label">Description <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="description" name="description" rows="4" required
+                                      placeholder="Describe what your AI tool does">{{ tool.description }}</textarea>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label for="category" class="form-label">Category <span class="text-danger">*</span></label>
+                                <select class="form-select" id="category" name="category" required>
+                                    <option value="">Select a category</option>
+                                    <option value="ai-writing" {% if tool.category == 'ai-writing' %}selected{% endif %}>AI Writing</option>
+                                    <option value="image-generation" {% if tool.category == 'image-generation' %}selected{% endif %}>Image Generation</option>
+                                    <option value="data-analysis" {% if tool.category == 'data-analysis' %}selected{% endif %}>Data Analysis</option>
+                                    <option value="chatbots" {% if tool.category == 'chatbots' %}selected{% endif %}>Chatbots</option>
+                                    <option value="code-generation" {% if tool.category == 'code-generation' %}selected{% endif %}>Code Generation</option>
+                                    <option value="voice-ai" {% if tool.category == 'voice-ai' %}selected{% endif %}>Voice AI</option>
+                                    <option value="video-ai" {% if tool.category == 'video-ai' %}selected{% endif %}>Video AI</option>
+                                    <option value="productivity" {% if tool.category == 'productivity' %}selected{% endif %}>Productivity</option>
+                                    <option value="marketing" {% if tool.category == 'marketing' %}selected{% endif %}>Marketing</option>
+                                    <option value="education" {% if tool.category == 'education' %}selected{% endif %}>Education</option>
+                                    <option value="healthcare" {% if tool.category == 'healthcare' %}selected{% endif %}>Healthcare</option>
+                                    <option value="finance" {% if tool.category == 'finance' %}selected{% endif %}>Finance</option>
+                                    <option value="other" {% if tool.category == 'other' %}selected{% endif %}>Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="pricing_model" class="form-label">Pricing Model</label>
+                                <select class="form-select" id="pricing_model" name="pricing_model">
+                                    <option value="free" {% if tool.pricing_model == 'free' %}selected{% endif %}>Free</option>
+                                    <option value="freemium" {% if tool.pricing_model == 'freemium' %}selected{% endif %}>Freemium</option>
+                                    <option value="paid" {% if tool.pricing_model == 'paid' %}selected{% endif %}>Paid</option>
+                                    <option value="subscription" {% if tool.pricing_model == 'subscription' %}selected{% endif %}>Subscription</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="url" class="form-label">Tool URL <span class="text-danger">*</span></label>
+                            <input type="url" class="form-control" id="url" name="url" required 
+                                   value="{{ tool.url }}" placeholder="https://your-ai-tool.com">
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label for="logo" class="form-label">Tool Logo</label>
+                                <input type="file" class="form-control" id="logo" name="logo" accept="image/*">
+                                {% if tool.logo %}
+                                    <div class="form-text">Current logo: <a href="{{ tool.logo.url }}" target="_blank">View</a></div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="tags" class="form-label">Tags</label>
+                                <input type="text" class="form-control" id="tags" name="tags" 
+                                       value="{{ tool.tags|default:'' }}" placeholder="ai, machine learning, automation">
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="features" class="form-label">Key Features</label>
+                            <textarea class="form-control" id="features" name="features" rows="3"
+                                      placeholder="List the main features of your AI tool">{{ tool.features|default:'' }}</textarea>
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="is_active" name="is_active" 
+                                       {% if tool.is_active %}checked{% endif %}>
+                                <label class="form-check-label" for="is_active">
+                                    Tool is active and should be displayed publicly
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-3">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Update Tool
+                            </button>
+                            <a href="{% url 'dashboard:tools_list' %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Tools
+                            </a>
+                            <button type="button" class="btn btn-outline-danger ms-auto" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                <i class="fas fa-trash me-2"></i>Delete Tool
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <!-- Tool Status -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">📊 Tool Status</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-muted">Current Status:</span>
+                            {% if tool.status == 'approved' %}
+                                <span class="badge bg-success">Approved</span>
+                            {% elif tool.status == 'pending' %}
+                                <span class="badge bg-warning">Pending Review</span>
+                            {% else %}
+                                <span class="badge bg-danger">Rejected</span>
+                            {% endif %}
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-muted">Active Status:</span>
+                            {% if tool.is_active %}
+                                <span class="badge bg-info">Active</span>
+                            {% else %}
+                                <span class="badge bg-secondary">Inactive</span>
+                            {% endif %}
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-muted">Created:</span>
+                            <span>{{ tool.created_at|date:'M d, Y' }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted">Last Updated:</span>
+                            <span>{{ tool.updated_at|date:'M d, Y' }}</span>
+                        </div>
+                    </div>
+
+                    {% if tool.status == 'rejected' and tool.rejection_reason %}
+                    <div class="alert alert-danger">
+                        <h6 class="alert-heading">Rejection Reason:</h6>
+                        <p class="mb-0">{{ tool.rejection_reason }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Tool Analytics Preview -->
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5 class="mb-0">📈 Quick Stats</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-6">
+                            <div class="border-end">
+                                <h4 class="text-primary mb-1">1,234</h4>
+                                <small class="text-muted">Views</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <h4 class="text-success mb-1">89</h4>
+                            <small class="text-muted">Clicks</small>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="d-grid">
+                        <a href="{% url 'dashboard:analytics' %}" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-chart-bar me-2"></i>View Full Analytics
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5 class="mb-0">⚡ Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="{{ tool.url }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-external-link-alt me-2"></i>Visit Tool
+                        </a>
+                        <a href="{% url 'dashboard:advertise_tool' %}" class="btn btn-outline-success btn-sm">
+                            <i class="fas fa-bullhorn me-2"></i>Advertise This Tool
+                        </a>
+                        <button class="btn btn-outline-info btn-sm" onclick="copyToClipboard('{{ tool.url }}')">
+                            <i class="fas fa-copy me-2"></i>Copy URL
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete <strong>{{ tool.name }}</strong>?</p>
+                <p class="text-muted">This action cannot be undone and will permanently remove all associated data.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form action="{% url 'dashboard:delete_tool' tool.id %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete Tool</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Copy to clipboard function
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(function() {
+            // Show success message
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'alert alert-success alert-dismissible fade show';
+            alertDiv.innerHTML = `
+                URL copied to clipboard!
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            document.querySelector('.main-content').insertBefore(alertDiv, document.querySelector('.fade-in-up'));
+            
+            // Auto-dismiss after 3 seconds
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 3000);
+        });
+    }
+
+    // Form submission
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const submitBtn = this.querySelector('button[type="submit"]');
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Updating...';
+        submitBtn.disabled = true;
+    });
+</script>
+{% endblock %}
+

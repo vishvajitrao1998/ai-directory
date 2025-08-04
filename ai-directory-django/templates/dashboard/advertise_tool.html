@@ -1,0 +1,342 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Advertise Tool - AI Directory{% endblock %}
+{% block page_title %}Advertise Your Tools{% endblock %}
+
+{% block content %}
+<div class="fade-in-up">
+    <!-- Header Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="me-3">
+                            <div class="bg-success rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                                <i class="fas fa-bullhorn text-white fa-2x"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h2 class="h3 mb-2">Advertise Your AI Tools</h2>
+                            <p class="text-muted mb-0">Boost your tool's visibility and reach more users with our advertising options</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Advertisement Request Form -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Request Advertisement</h5>
+                </div>
+                <div class="card-body">
+                    {% if user_tools %}
+                        <form method="post">
+                            {% csrf_token %}
+                            
+                            <div class="mb-4">
+                                <label for="tool_id" class="form-label">Select Tool to Advertise <span class="text-danger">*</span></label>
+                                <select class="form-select" id="tool_id" name="tool_id" required>
+                                    <option value="">Choose a tool...</option>
+                                    {% for tool in user_tools %}
+                                        <option value="{{ tool.id }}" data-url="{{ tool.url }}" data-category="{{ tool.category }}">
+                                            {{ tool.name }} - {{ tool.category|title }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                                <div class="form-text">Only approved tools can be advertised</div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="advertisement_type" class="form-label">Advertisement Type <span class="text-danger">*</span></label>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card h-100 ad-type-card" data-type="featured">
+                                            <div class="card-body text-center">
+                                                <i class="fas fa-star fa-2x text-warning mb-3"></i>
+                                                <h6>Featured Listing</h6>
+                                                <p class="small text-muted">Highlighted in search results</p>
+                                                <div class="fw-bold text-primary">$29/month</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card h-100 ad-type-card" data-type="banner">
+                                            <div class="card-body text-center">
+                                                <i class="fas fa-image fa-2x text-info mb-3"></i>
+                                                <h6>Banner Ad</h6>
+                                                <p class="small text-muted">Display banner on homepage</p>
+                                                <div class="fw-bold text-primary">$99/month</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card h-100 ad-type-card" data-type="sponsored">
+                                            <div class="card-body text-center">
+                                                <i class="fas fa-crown fa-2x text-warning mb-3"></i>
+                                                <h6>Sponsored Post</h6>
+                                                <p class="small text-muted">Dedicated blog post feature</p>
+                                                <div class="fw-bold text-primary">$199/month</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="advertisement_type" name="advertisement_type" required>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="duration" class="form-label">Duration <span class="text-danger">*</span></label>
+                                <select class="form-select" id="duration" name="duration" required>
+                                    <option value="">Select duration...</option>
+                                    <option value="1">1 Month</option>
+                                    <option value="3">3 Months (10% discount)</option>
+                                    <option value="6">6 Months (20% discount)</option>
+                                    <option value="12">12 Months (30% discount)</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="target_audience" class="form-label">Target Audience</label>
+                                <textarea class="form-control" id="target_audience" name="target_audience" rows="3"
+                                          placeholder="Describe your target audience (optional)"></textarea>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="special_requirements" class="form-label">Special Requirements</label>
+                                <textarea class="form-control" id="special_requirements" name="special_requirements" rows="3"
+                                          placeholder="Any special requirements or notes for the advertisement"></textarea>
+                            </div>
+
+                            <div class="mb-4">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <h6 class="mb-3">Advertisement Summary</h6>
+                                        <div id="ad-summary">
+                                            <p class="text-muted">Select a tool and advertisement type to see the summary</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex gap-3">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-paper-plane me-2"></i>Submit Advertisement Request
+                                </button>
+                                <a href="{% url 'tools_list' %}" class="btn btn-outline-secondary">
+                                    <i class="fas fa-arrow-left me-2"></i>Back to Tools
+                                </a>
+                            </div>
+                        </form>
+                    {% else %}
+                        <div class="text-center py-5">
+                            <i class="fas fa-exclamation-triangle fa-4x text-warning mb-4"></i>
+                            <h4>No Approved Tools</h4>
+                            <p class="text-muted mb-4">You need to have at least one approved tool before you can request advertisement.</p>
+                            <a href="{% url 'submit_tool' %}" class="btn btn-primary">
+                                <i class="fas fa-plus me-2"></i>Submit Your First Tool
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <!-- Advertisement Benefits -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">🚀 Why Advertise?</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <i class="fas fa-eye text-primary me-2"></i>
+                            <strong>Increased Visibility</strong><br>
+                            <small class="text-muted">Get your tool seen by thousands of users</small>
+                        </li>
+                        <li class="mb-3">
+                            <i class="fas fa-chart-line text-success me-2"></i>
+                            <strong>Higher Click-through Rates</strong><br>
+                            <small class="text-muted">Featured tools get 5x more clicks</small>
+                        </li>
+                        <li class="mb-3">
+                            <i class="fas fa-target text-info me-2"></i>
+                            <strong>Targeted Exposure</strong><br>
+                            <small class="text-muted">Reach users interested in your category</small>
+                        </li>
+                        <li class="mb-0">
+                            <i class="fas fa-trophy text-warning me-2"></i>
+                            <strong>Premium Placement</strong><br>
+                            <small class="text-muted">Stand out from the competition</small>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Current Advertisements -->
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5 class="mb-0">📊 Your Active Ads</h5>
+                </div>
+                <div class="card-body">
+                    <div class="text-center py-3">
+                        <i class="fas fa-bullhorn fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">No active advertisements</p>
+                        <small class="text-muted">Your advertisement requests will appear here</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pricing Guide -->
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5 class="mb-0">💰 Pricing Guide</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="small">Featured Listing</span>
+                            <span class="fw-bold">$29/mo</span>
+                        </div>
+                        <div class="progress" style="height: 4px;">
+                            <div class="progress-bar bg-warning" style="width: 30%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="small">Banner Ad</span>
+                            <span class="fw-bold">$99/mo</span>
+                        </div>
+                        <div class="progress" style="height: 4px;">
+                            <div class="progress-bar bg-info" style="width: 70%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="small">Sponsored Post</span>
+                            <span class="fw-bold">$199/mo</span>
+                        </div>
+                        <div class="progress" style="height: 4px;">
+                            <div class="progress-bar bg-warning" style="width: 100%"></div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info mt-3">
+                        <small>
+                            <i class="fas fa-info-circle me-1"></i>
+                            <strong>Bulk Discounts:</strong> Save up to 30% with longer commitments
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const adTypeCards = document.querySelectorAll('.ad-type-card');
+        const adTypeInput = document.getElementById('advertisement_type');
+        const toolSelect = document.getElementById('tool_id');
+        const durationSelect = document.getElementById('duration');
+        const adSummary = document.getElementById('ad-summary');
+
+        // Advertisement type selection
+        adTypeCards.forEach(card => {
+            card.addEventListener('click', function() {
+                // Remove active class from all cards
+                adTypeCards.forEach(c => c.classList.remove('border-primary', 'bg-light'));
+                
+                // Add active class to clicked card
+                this.classList.add('border-primary', 'bg-light');
+                
+                // Set the hidden input value
+                adTypeInput.value = this.dataset.type;
+                
+                updateSummary();
+            });
+        });
+
+        // Update summary when selections change
+        toolSelect.addEventListener('change', updateSummary);
+        durationSelect.addEventListener('change', updateSummary);
+
+        function updateSummary() {
+            const selectedTool = toolSelect.options[toolSelect.selectedIndex];
+            const selectedType = adTypeInput.value;
+            const selectedDuration = durationSelect.value;
+
+            if (selectedTool.value && selectedType && selectedDuration) {
+                const toolName = selectedTool.text;
+                const toolCategory = selectedTool.dataset.category;
+                
+                const prices = {
+                    'featured': 29,
+                    'banner': 99,
+                    'sponsored': 199
+                };
+
+                const discounts = {
+                    '1': 0,
+                    '3': 0.1,
+                    '6': 0.2,
+                    '12': 0.3
+                };
+
+                const basePrice = prices[selectedType];
+                const discount = discounts[selectedDuration];
+                const finalPrice = basePrice * (1 - discount) * parseInt(selectedDuration);
+
+                adSummary.innerHTML = `
+                    <div class="row">
+                        <div class="col-6">
+                            <strong>Tool:</strong><br>
+                            <span class="text-muted">${toolName}</span>
+                        </div>
+                        <div class="col-6">
+                            <strong>Type:</strong><br>
+                            <span class="text-muted">${selectedType.charAt(0).toUpperCase() + selectedType.slice(1)}</span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-6">
+                            <strong>Duration:</strong><br>
+                            <span class="text-muted">${selectedDuration} month(s)</span>
+                        </div>
+                        <div class="col-6">
+                            <strong>Total Cost:</strong><br>
+                            <span class="text-success fw-bold">$${finalPrice.toFixed(0)}</span>
+                            ${discount > 0 ? `<br><small class="text-success">${(discount * 100)}% discount applied</small>` : ''}
+                        </div>
+                    </div>
+                `;
+            } else {
+                adSummary.innerHTML = '<p class="text-muted">Select a tool and advertisement type to see the summary</p>';
+            }
+        }
+
+        // Form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            if (!adTypeInput.value) {
+                e.preventDefault();
+                alert('Please select an advertisement type');
+                return;
+            }
+
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Submitting Request...';
+            submitBtn.disabled = true;
+        });
+    });
+</script>
+{% endblock %}
+

@@ -1,0 +1,71 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Plans - AI Directory{% endblock %}
+{% block page_title %}Subscription Plans{% endblock %}
+
+{% block content %}
+<div class="fade-in-up">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h2 class="h3 mb-2">Choose Your Plan</h2>
+                    <p class="text-muted">Upgrade your account to unlock more features and submit more tools</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Free</h5>
+                    <div class="display-4 text-primary mb-3">$0</div>
+                    <p class="text-muted">Perfect for getting started</p>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Up to 5 tools</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Basic analytics</li>
+                        <li class="mb-2"><i class="fas fa-times text-danger me-2"></i>No advertising</li>
+                    </ul>
+                    <button class="btn btn-outline-primary w-100" disabled>Current Plan</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 border-primary">
+                <div class="card-body text-center">
+                    <div class="badge bg-primary mb-2">Most Popular</div>
+                    <h5 class="card-title">Pro</h5>
+                    <div class="display-4 text-primary mb-3">$29</div>
+                    <p class="text-muted">For serious tool creators</p>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Up to 50 tools</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Advanced analytics</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Featured listings</li>
+                    </ul>
+                    <button class="btn btn-primary w-100">Upgrade to Pro</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Enterprise</h5>
+                    <div class="display-4 text-primary mb-3">$99</div>
+                    <p class="text-muted">For large organizations</p>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Unlimited tools</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Priority support</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Custom branding</li>
+                    </ul>
+                    <button class="btn btn-outline-primary w-100">Contact Sales</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,142 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Pricing - AI Directory{% endblock %}
+{% block page_title %}Pricing{% endblock %}
+
+{% block content %}
+<div class="fade-in-up">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h2 class="h3 mb-2">Simple, Transparent Pricing</h2>
+                    <p class="text-muted">Choose the plan that works best for your needs</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Free</h5>
+                    <div class="display-4 text-primary mb-3">$0<small class="fs-6 text-muted">/month</small></div>
+                    <p class="text-muted">Perfect for getting started</p>
+                    <ul class="list-unstyled text-start">
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Submit up to 5 AI tools</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Basic analytics dashboard</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Community support</li>
+                        <li class="mb-2"><i class="fas fa-times text-danger me-2"></i>No featured listings</li>
+                        <li class="mb-2"><i class="fas fa-times text-danger me-2"></i>No advertising options</li>
+                    </ul>
+                    <button class="btn btn-outline-primary w-100 mt-auto" disabled>Current Plan</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 border-primary position-relative">
+                <div class="position-absolute top-0 start-50 translate-middle">
+                    <span class="badge bg-primary">Most Popular</span>
+                </div>
+                <div class="card-body text-center">
+                    <h5 class="card-title">Pro</h5>
+                    <div class="display-4 text-primary mb-3">$29<small class="fs-6 text-muted">/month</small></div>
+                    <p class="text-muted">For serious tool creators</p>
+                    <ul class="list-unstyled text-start">
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Submit up to 50 AI tools</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Advanced analytics & insights</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Featured listings included</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Priority review process</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Email support</li>
+                    </ul>
+                    <button class="btn btn-primary w-100 mt-auto">Upgrade to Pro</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Enterprise</h5>
+                    <div class="display-4 text-primary mb-3">$99<small class="fs-6 text-muted">/month</small></div>
+                    <p class="text-muted">For large organizations</p>
+                    <ul class="list-unstyled text-start">
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Unlimited AI tools</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Advanced analytics & reporting</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Premium advertising options</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Dedicated account manager</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Custom branding options</li>
+                    </ul>
+                    <button class="btn btn-outline-primary w-100 mt-auto">Contact Sales</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feature Comparison -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Feature Comparison</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Feature</th>
+                                    <th class="text-center">Free</th>
+                                    <th class="text-center">Pro</th>
+                                    <th class="text-center">Enterprise</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>AI Tools Submissions</td>
+                                    <td class="text-center">5</td>
+                                    <td class="text-center">50</td>
+                                    <td class="text-center">Unlimited</td>
+                                </tr>
+                                <tr>
+                                    <td>Analytics Dashboard</td>
+                                    <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                                    <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                                    <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>Featured Listings</td>
+                                    <td class="text-center"><i class="fas fa-times text-danger"></i></td>
+                                    <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                                    <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>Priority Review</td>
+                                    <td class="text-center"><i class="fas fa-times text-danger"></i></td>
+                                    <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                                    <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>Advertising Options</td>
+                                    <td class="text-center"><i class="fas fa-times text-danger"></i></td>
+                                    <td class="text-center">Basic</td>
+                                    <td class="text-center">Premium</td>
+                                </tr>
+                                <tr>
+                                    <td>Support</td>
+                                    <td class="text-center">Community</td>
+                                    <td class="text-center">Email</td>
+                                    <td class="text-center">Dedicated Manager</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

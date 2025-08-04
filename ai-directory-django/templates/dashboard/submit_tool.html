@@ -1,0 +1,276 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Submit Tool - AI Directory{% endblock %}
+{% block page_title %}Submit New Tool{% endblock %}
+
+{% block content %}
+<div class="fade-in-up">
+    <!-- Header Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="me-3">
+                            <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                                <i class="fas fa-plus text-white fa-2x"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h2 class="h3 mb-2">Submit Your AI Tool</h2>
+                            <p class="text-muted mb-0">Share your AI tool with our community. All submissions are reviewed by our team.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Submission Form -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Tool Information</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <div class="mb-4">
+                            <label for="name" class="form-label">Tool Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="name" name="name" required 
+                                   placeholder="Enter your AI tool name">
+                            <div class="form-text">Choose a clear, descriptive name for your tool</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="description" class="form-label">Description <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="description" name="description" rows="4" required
+                                      placeholder="Describe what your AI tool does, its key features, and benefits"></textarea>
+                            <div class="form-text">Provide a detailed description to help users understand your tool</div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label for="category" class="form-label">Category <span class="text-danger">*</span></label>
+                                <select class="form-select" id="category" name="category" required>
+                                    <option value="">Select a category</option>
+                                    <option value="ai-writing">AI Writing</option>
+                                    <option value="image-generation">Image Generation</option>
+                                    <option value="data-analysis">Data Analysis</option>
+                                    <option value="chatbots">Chatbots</option>
+                                    <option value="code-generation">Code Generation</option>
+                                    <option value="voice-ai">Voice AI</option>
+                                    <option value="video-ai">Video AI</option>
+                                    <option value="productivity">Productivity</option>
+                                    <option value="marketing">Marketing</option>
+                                    <option value="education">Education</option>
+                                    <option value="healthcare">Healthcare</option>
+                                    <option value="finance">Finance</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="pricing_model" class="form-label">Pricing Model</label>
+                                <select class="form-select" id="pricing_model" name="pricing_model">
+                                    <option value="free">Free</option>
+                                    <option value="freemium">Freemium</option>
+                                    <option value="paid">Paid</option>
+                                    <option value="subscription">Subscription</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="url" class="form-label">Tool URL <span class="text-danger">*</span></label>
+                            <input type="url" class="form-control" id="url" name="url" required 
+                                   placeholder="https://your-ai-tool.com">
+                            <div class="form-text">The direct link to your AI tool</div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label for="logo" class="form-label">Tool Logo</label>
+                                <input type="file" class="form-control" id="logo" name="logo" accept="image/*">
+                                <div class="form-text">Upload a logo for your tool (optional)</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="tags" class="form-label">Tags</label>
+                                <input type="text" class="form-control" id="tags" name="tags" 
+                                       placeholder="ai, machine learning, automation">
+                                <div class="form-text">Comma-separated tags to help with discovery</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="features" class="form-label">Key Features</label>
+                            <textarea class="form-control" id="features" name="features" rows="3"
+                                      placeholder="List the main features of your AI tool"></textarea>
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="terms" name="terms" required>
+                                <label class="form-check-label" for="terms">
+                                    I agree to the <a href="#" class="text-primary">Terms of Service</a> and confirm that I own or have permission to submit this tool
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-3">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane me-2"></i>Submit for Review
+                            </button>
+                            <a href="{% url 'tools_list' %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-times me-2"></i>Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <!-- Submission Guidelines -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">📋 Submission Guidelines</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h6 class="text-primary">✅ What we accept:</h6>
+                        <ul class="list-unstyled small">
+                            <li class="mb-1">• Functional AI tools and applications</li>
+                            <li class="mb-1">• Tools with clear value proposition</li>
+                            <li class="mb-1">• Well-documented features</li>
+                            <li class="mb-1">• Accessible and working URLs</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h6 class="text-danger">❌ What we don't accept:</h6>
+                        <ul class="list-unstyled small">
+                            <li class="mb-1">• Broken or non-functional tools</li>
+                            <li class="mb-1">• Spam or low-quality content</li>
+                            <li class="mb-1">• Duplicate submissions</li>
+                            <li class="mb-1">• Tools promoting harmful content</li>
+                        </ul>
+                    </div>
+
+                    <div class="alert alert-info">
+                        <small>
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Review Process:</strong> Our team typically reviews submissions within 2-3 business days. You'll receive an email notification once your tool is approved or if we need additional information.
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tips Card -->
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5 class="mb-0">💡 Pro Tips</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled small mb-0">
+                        <li class="mb-2">
+                            <i class="fas fa-lightbulb text-warning me-2"></i>
+                            Use clear, descriptive titles
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-lightbulb text-warning me-2"></i>
+                            Include screenshots or demos
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-lightbulb text-warning me-2"></i>
+                            Highlight unique features
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-lightbulb text-warning me-2"></i>
+                            Choose the right category
+                        </li>
+                        <li class="mb-0">
+                            <i class="fas fa-lightbulb text-warning me-2"></i>
+                            Test your URL before submitting
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Recent Submissions -->
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5 class="mb-0">📈 Your Recent Submissions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="small text-muted">Total Submitted:</span>
+                        <span class="badge bg-primary">5</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="small text-muted">Approved:</span>
+                        <span class="badge bg-success">3</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="small text-muted">Pending:</span>
+                        <span class="badge bg-warning">1</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="small text-muted">Rejected:</span>
+                        <span class="badge bg-danger">1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Form validation and enhancement
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        const nameInput = document.getElementById('name');
+        const urlInput = document.getElementById('url');
+        
+        // Real-time URL validation
+        urlInput.addEventListener('blur', function() {
+            const url = this.value;
+            if (url && !isValidUrl(url)) {
+                this.classList.add('is-invalid');
+                if (!this.nextElementSibling || !this.nextElementSibling.classList.contains('invalid-feedback')) {
+                    const feedback = document.createElement('div');
+                    feedback.className = 'invalid-feedback';
+                    feedback.textContent = 'Please enter a valid URL';
+                    this.parentNode.appendChild(feedback);
+                }
+            } else {
+                this.classList.remove('is-invalid');
+                const feedback = this.parentNode.querySelector('.invalid-feedback');
+                if (feedback) {
+                    feedback.remove();
+                }
+            }
+        });
+
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Submitting...';
+            submitBtn.disabled = true;
+        });
+
+        function isValidUrl(string) {
+            try {
+                new URL(string);
+                return true;
+            } catch (_) {
+                return false;
+            }
+        }
+    });
+</script>
+{% endblock %}
+

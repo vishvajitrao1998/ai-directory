@@ -1,0 +1,487 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Analytics - AI Directory{% endblock %}
+{% block page_title %}Tool Analytics{% endblock %}
+
+{% block content %}
+<div class="fade-in-up">
+    <!-- Header Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <div class="me-3">
+                                <div class="bg-info rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                                    <i class="fas fa-chart-bar text-white fa-2x"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h2 class="h3 mb-2">Tool Analytics</h2>
+                                <p class="text-muted mb-0">Track your AI tools' performance and user engagement</p>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <select class="form-select" id="timeRange" style="width: auto;">
+                                <option value="7">Last 7 days</option>
+                                <option value="30" selected>Last 30 days</option>
+                                <option value="90">Last 90 days</option>
+                                <option value="365">Last year</option>
+                            </select>
+                            <button class="btn btn-outline-primary" onclick="exportData()">
+                                <i class="fas fa-download me-2"></i>Export
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overview Stats -->
+    <div class="row mb-4">
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="stats-card">
+                <div class="stats-icon" style="background-color: rgba(99, 102, 241, 0.1); color: var(--primary-color);">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <div class="stats-number">12,345</div>
+                <div class="stats-label">Total Views</div>
+                <div class="stats-change text-success">
+                    <i class="fas fa-arrow-up"></i> +23% from last month
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="stats-card">
+                <div class="stats-icon" style="background-color: rgba(16, 185, 129, 0.1); color: var(--success-color);">
+                    <i class="fas fa-mouse-pointer"></i>
+                </div>
+                <div class="stats-number">2,456</div>
+                <div class="stats-label">Total Clicks</div>
+                <div class="stats-change text-success">
+                    <i class="fas fa-arrow-up"></i> +15% from last month
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="stats-card">
+                <div class="stats-icon" style="background-color: rgba(245, 158, 11, 0.1); color: var(--warning-color);">
+                    <i class="fas fa-percentage"></i>
+                </div>
+                <div class="stats-number">19.9%</div>
+                <div class="stats-label">Click-through Rate</div>
+                <div class="stats-change text-danger">
+                    <i class="fas fa-arrow-down"></i> -2% from last month
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="stats-card">
+                <div class="stats-icon" style="background-color: rgba(239, 68, 68, 0.1); color: var(--danger-color);">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stats-number">4.7</div>
+                <div class="stats-label">Average Rating</div>
+                <div class="stats-change text-success">
+                    <i class="fas fa-arrow-up"></i> +0.2 from last month
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="row mb-4">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Views & Clicks Over Time</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="trafficChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Top Performing Tools</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="fw-medium">AI Writing Assistant</span>
+                            <span class="badge bg-primary">3,456 views</span>
+                        </div>
+                        <div class="progress" style="height: 6px;">
+                            <div class="progress-bar" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="fw-medium">Image Generator Pro</span>
+                            <span class="badge bg-primary">2,890 views</span>
+                        </div>
+                        <div class="progress" style="height: 6px;">
+                            <div class="progress-bar" style="width: 70%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="fw-medium">Data Analyzer</span>
+                            <span class="badge bg-primary">1,234 views</span>
+                        </div>
+                        <div class="progress" style="height: 6px;">
+                            <div class="progress-bar" style="width: 30%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-0">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="fw-medium">Chatbot Builder</span>
+                            <span class="badge bg-primary">987 views</span>
+                        </div>
+                        <div class="progress" style="height: 6px;">
+                            <div class="progress-bar" style="width: 25%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detailed Analytics Table -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Detailed Tool Analytics</h5>
+                        <div class="d-flex gap-2">
+                            <input type="text" class="form-control form-control-sm" placeholder="Search tools..." style="width: 200px;">
+                            <select class="form-select form-select-sm" style="width: auto;">
+                                <option>All Categories</option>
+                                <option>AI Writing</option>
+                                <option>Image Generation</option>
+                                <option>Data Analysis</option>
+                                <option>Chatbots</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="border-0">Tool</th>
+                                    <th class="border-0">Views</th>
+                                    <th class="border-0">Clicks</th>
+                                    <th class="border-0">CTR</th>
+                                    <th class="border-0">Rating</th>
+                                    <th class="border-0">Trend</th>
+                                    <th class="border-0">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for data in analytics_data %}
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="me-3">
+                                                <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                                    <i class="fas fa-robot text-white"></i>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-1">{{ data.tool.name }}</h6>
+                                                <small class="text-muted">{{ data.tool.category|title }}</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="fw-medium">{{ data.views|default:"1,234" }}</div>
+                                        <small class="text-success">+12% this week</small>
+                                    </td>
+                                    <td>
+                                        <div class="fw-medium">{{ data.clicks|default:"245" }}</div>
+                                        <small class="text-success">+8% this week</small>
+                                    </td>
+                                    <td>
+                                        <div class="fw-medium">19.9%</div>
+                                        <small class="text-danger">-1.2% this week</small>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <span class="fw-medium me-2">4.7</span>
+                                            <div class="text-warning">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star-half-alt"></i>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="mini-chart">
+                                            <canvas width="60" height="30" data-chart="spark"></canvas>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                                Actions
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="#" onclick="viewDetailedAnalytics('{{ data.tool.id }}')">
+                                                        <i class="fas fa-chart-line me-2"></i>Detailed Analytics
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="{% url 'update_tool' data.tool.id %}">
+                                                        <i class="fas fa-edit me-2"></i>Edit Tool
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="{{ data.tool.url }}" target="_blank">
+                                                        <i class="fas fa-external-link-alt me-2"></i>Visit Tool
+                                                    </a>
+                                                </li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li>
+                                                    <a class="dropdown-item" href="{% url 'advertise_tool' %}">
+                                                        <i class="fas fa-bullhorn me-2"></i>Advertise
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="7" class="text-center py-5">
+                                        <i class="fas fa-chart-bar fa-3x text-muted mb-3"></i>
+                                        <h5 class="text-muted">No Analytics Data</h5>
+                                        <p class="text-muted">Submit and approve tools to start seeing analytics data</p>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Detailed Analytics Modal -->
+<div class="modal fade" id="detailedAnalyticsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detailed Analytics</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="detailedAnalyticsContent">
+                    <!-- Content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .stats-change {
+        font-size: 0.75rem;
+        margin-top: 0.5rem;
+    }
+
+    .mini-chart {
+        width: 60px;
+        height: 30px;
+    }
+
+    .progress {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Traffic Chart
+    const ctx = document.getElementById('trafficChart').getContext('2d');
+    const trafficChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            datasets: [{
+                label: 'Views',
+                data: [1200, 1900, 3000, 5000, 2000, 3000, 4500, 3200, 4100, 3800, 4200, 4800],
+                borderColor: 'rgb(99, 102, 241)',
+                backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                tension: 0.4,
+                fill: true
+            }, {
+                label: 'Clicks',
+                data: [240, 380, 600, 1000, 400, 600, 900, 640, 820, 760, 840, 960],
+                borderColor: 'rgb(16, 185, 129)',
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.1)'
+                    }
+                },
+                x: {
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.1)'
+                    }
+                }
+            }
+        }
+    });
+
+    // Mini sparkline charts
+    document.querySelectorAll('[data-chart="spark"]').forEach(canvas => {
+        const ctx = canvas.getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['', '', '', '', '', '', ''],
+                datasets: [{
+                    data: [10, 15, 12, 18, 22, 20, 25],
+                    borderColor: 'rgb(99, 102, 241)',
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: { display: false },
+                    y: { display: false }
+                },
+                elements: {
+                    point: { radius: 0 }
+                }
+            }
+        });
+    });
+
+    // Time range change
+    document.getElementById('timeRange').addEventListener('change', function() {
+        // Update charts based on selected time range
+        console.log('Time range changed to:', this.value);
+        // Here you would typically make an AJAX call to get new data
+    });
+
+    // Export data function
+    function exportData() {
+        // Implement export functionality
+        alert('Export functionality would be implemented here');
+    }
+
+    // View detailed analytics
+    function viewDetailedAnalytics(toolId) {
+        const modal = new bootstrap.Modal(document.getElementById('detailedAnalyticsModal'));
+        const content = document.getElementById('detailedAnalyticsContent');
+        
+        content.innerHTML = `
+            <div class="text-center py-4">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-2">Loading detailed analytics...</p>
+            </div>
+        `;
+        
+        modal.show();
+        
+        // Simulate loading detailed analytics
+        setTimeout(() => {
+            content.innerHTML = `
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="text-center">
+                            <h4 class="text-primary">3,456</h4>
+                            <small class="text-muted">Total Views</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="text-center">
+                            <h4 class="text-success">689</h4>
+                            <small class="text-muted">Total Clicks</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="text-center">
+                            <h4 class="text-warning">19.9%</h4>
+                            <small class="text-muted">CTR</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="text-center">
+                            <h4 class="text-info">4.7</h4>
+                            <small class="text-muted">Rating</small>
+                        </div>
+                    </div>
+                </div>
+                <canvas id="detailedChart" height="200"></canvas>
+            `;
+            
+            // Create detailed chart
+            const detailedCtx = document.getElementById('detailedChart').getContext('2d');
+            new Chart(detailedCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Daily Views',
+                        data: [120, 190, 300, 500, 200, 300, 450],
+                        backgroundColor: 'rgba(99, 102, 241, 0.8)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }, 1500);
+    }
+</script>
+{% endblock %}
+

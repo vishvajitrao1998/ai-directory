@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from . import auth_views
+from . import dashboard_views
 
 # app_name = 'tools'
 
@@ -23,8 +25,46 @@ urlpatterns = [
     path("api/currencies/", views.get_currency_list, name="get_currency_list"),
     path("api/listing/prices", views.get_prices_by_currency, name="get_prices_by_currency"),
     path("api/advertise/prices", views.get_prices_by_currency_advertise, name="get_prices_by_currency_advertise"),
+    # API endpoints for AJAX requests
+    path('api/check-username/', auth_views.check_username_availability, name='check_username'),
+    path('api/check-email/', auth_views.check_email_availability, name='check_email'),
+    path('api/signup/', auth_views.signup_view, name='account_creation'),
 
+    # API endpoints
+    path('api/tool-stats/', dashboard_views.get_tool_stats, name='api_tool_stats'),
+    path('api/toggle-tool/<int:tool_id>/', dashboard_views.toggle_tool_status, name='api_toggle_tool'),
+
+    # Authentication URLs
+    path('login/', auth_views.login_view, name='login'),
+    path('signup/', auth_views.signup_view, name='signup'),
+    path('logout/', auth_views.logout_view, name='logout'),
+    path('forgot-password/', auth_views.forgot_password_view, name='forgot_password'),
+    path('reset-password/<uidb64>/<token>/', auth_views.reset_password_view, name='reset_password'),
+
+    path('dashboard', dashboard_views.dashboard_home, name='dashboard'),
+    
+    # Tools management
+    path('dashboard/tools/', dashboard_views.tools_list, name='tools_list'),
+    path('dashboard/tools/submit/', dashboard_views.submit_tool, name='submit_tool'),
+    path('dashboard/tools/update/<int:tool_id>/', dashboard_views.update_tool, name='update_tool'),
+    path('dashboard/tools/delete/<int:tool_id>/', dashboard_views.delete_tool, name='delete_tool'),
+    
+    # Advertisement
+    path('dashboard/advertise/', dashboard_views.advertise_tool, name='advertise_tool'),
+    
+    # Plans and Analytics
+    path('dashboard/plans/', dashboard_views.plans, name='plans'),
+    path('dashboard/analytics/', dashboard_views.analytics, name='analytics'),
+    
+    # User settings
+    path('dashboard/profile/', dashboard_views.profile_settings, name='profile_settings'),
+    path('dashboard/account/', dashboard_views.account_settings, name='account_settings'),
+    path('dashboard/help/', dashboard_views.help_center, name='help_center'),
+    path('dashboard/pricing/', dashboard_views.pricing, name='pricing'),
+    path('dashboard/logout/', dashboard_views.user_logout, name='logout'),
     # Close
+
+    # Close 
     
     # Admin endpoints
     path('admin/submissions/', views.get_submissions, name='get_submissions'),

@@ -1,0 +1,262 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Dashboard - AI Directory{% endblock %}
+{% block page_title %}Dashboard Overview{% endblock %}
+
+{% block content %}
+<div class="fade-in-up">
+    <!-- Welcome Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="h3 mb-2">Welcome back, {{ user.first_name|default:user.username }}! 👋</h2>
+                    <p class="text-muted mb-0">Here's what's happening with your AI tools today.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row mb-4">
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="stats-card">
+                <div class="stats-icon" style="background-color: rgba(99, 102, 241, 0.1); color: var(--primary-color);">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <div class="stats-number">{{ total_tools }}</div>
+                <div class="stats-label">Total Tools</div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="stats-card">
+                <div class="stats-icon" style="background-color: rgba(16, 185, 129, 0.1); color: var(--success-color);">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stats-number">{{ active_tools }}</div>
+                <div class="stats-label">Active Tools</div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="stats-card">
+                <div class="stats-icon" style="background-color: rgba(245, 158, 11, 0.1); color: var(--warning-color);">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stats-number">{{ pending_tools }}</div>
+                <div class="stats-label">Pending Review</div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="stats-card">
+                <div class="stats-icon" style="background-color: rgba(239, 68, 68, 0.1); color: var(--danger-color);">
+                    <i class="fas fa-bullhorn"></i>
+                </div>
+                <div class="stats-number">{{ tools_for_advertisement }}</div>
+                <div class="stats-label">Advertised Tools</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <a href="{% url 'submit_tool' %}" class="btn btn-primary w-100 d-flex align-items-center justify-content-center" style="height: 60px;">
+                                <i class="fas fa-plus-circle me-2"></i>
+                                Submit New Tool
+                            </a>
+                        </div>
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <a href="{% url 'tools_list' %}" class="btn btn-outline-primary w-100 d-flex align-items-center justify-content-center" style="height: 60px;">
+                                <i class="fas fa-list me-2"></i>
+                                Manage Tools
+                            </a>
+                        </div>
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <a href="{% url 'advertise_tool' %}" class="btn btn-outline-success w-100 d-flex align-items-center justify-content-center" style="height: 60px;">
+                                <i class="fas fa-bullhorn me-2"></i>
+                                Advertise Tool
+                            </a>
+                        </div>
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <a href="{% url 'analytics' %}" class="btn btn-outline-info w-100 d-flex align-items-center justify-content-center" style="height: 60px;">
+                                <i class="fas fa-chart-bar me-2"></i>
+                                View Analytics
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Tools and Activity -->
+    <div class="row">
+        <div class="col-lg-8 mb-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Recent Tools</h5>
+                    <a href="{% url 'tools_list' %}" class="btn btn-sm btn-outline-primary">View All</a>
+                </div>
+                <div class="card-body">
+                    {% if recent_tools %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Tool Name</th>
+                                        <th>Listing Type</th>
+                                        <th>Category</th>
+                                        <th>Created Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for tool in recent_tools %}
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="me-3">
+                                                    <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                                        <i class="fas fa-robot text-white"></i>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <h6 class="mb-0">{{ tool.name }}</h6>
+                                                    <!-- <small class="text-muted">{{ tool.description|truncatechars:50 }}</small> -->
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            {% if tool.listing_type == 'simple' %}
+                                                <span class="badge bg-black">Simple Listing</span>
+                                            {% elif tool.listing_type == 'verified' %}
+                                                <span class="badge bg-success">Verified Listing</span>
+                                            {% elif tool.listing_type == 'featured' %}
+                                                <span class="badge bg-info">Rejected</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ tool.category |default:'General' }}</td>
+                                        <td>{{ tool.created_date|date:'M d, Y' }}</td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <a href="{% url 'update_tool' tool.id %}" class="btn btn-outline-primary btn-sm">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a href="{{ tool.url }}" target="_blank" class="btn btn-outline-info btn-sm">
+                                                    <i class="fas fa-external-link-alt"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="fas fa-tools fa-3x text-muted mb-3"></i>
+                            <h5 class="text-muted">No tools yet</h5>
+                            <p class="text-muted">Start by submitting your first AI tool for review.</p>
+                            <a href="{% url 'submit_tool' %}" class="btn btn-primary">Submit Your First Tool</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Account Status</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-muted">Current Plan</span>
+                            <span class="badge bg-primary">Free</span>
+                        </div>
+                        <div class="progress" style="height: 8px;">
+                            <div class="progress-bar" role="progressbar" style="width: 60%"></div>
+                        </div>
+                        <small class="text-muted">3 of 5 tools used</small>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h6 class="mb-2">Quick Stats</h6>
+                        <ul class="list-unstyled mb-0">
+                            <li class="d-flex justify-content-between py-1">
+                                <span class="text-muted">Approved Tools:</span>
+                                <span class="fw-medium">{{ approved_tools }}</span>
+                            </li>
+                            <li class="d-flex justify-content-between py-1">
+                                <span class="text-muted">Total Views:</span>
+                                <span class="fw-medium">1,234</span>
+                            </li>
+                            <li class="d-flex justify-content-between py-1">
+                                <span class="text-muted">This Month:</span>
+                                <span class="fw-medium">+23%</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <a href="{% url 'plans' %}" class="btn btn-outline-primary">Upgrade Plan</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tips Card -->
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5 class="mb-0">💡 Pro Tips</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2">
+                            <i class="fas fa-check-circle text-success me-2"></i>
+                            Add detailed descriptions to improve tool visibility
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check-circle text-success me-2"></i>
+                            Use relevant categories for better discovery
+                        </li>
+                        <li class="mb-0">
+                            <i class="fas fa-check-circle text-success me-2"></i>
+                            Consider advertising popular tools
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Auto-refresh stats every 30 seconds
+    setInterval(function() {
+        fetch('{% url "api_tool_stats" %}')
+            .then(response => response.json())
+            .then(data => {
+                // Update stats cards with new data
+                document.querySelector('.stats-card:nth-child(1) .stats-number').textContent = data.total_tools;
+                document.querySelector('.stats-card:nth-child(2) .stats-number').textContent = data.active_tools;
+                document.querySelector('.stats-card:nth-child(3) .stats-number').textContent = data.pending_tools;
+                document.querySelector('.stats-card:nth-child(4) .stats-number').textContent = data.approved_tools;
+            })
+            .catch(error => console.log('Error updating stats:', error));
+    }, 30000);
+</script>
+{% endblock %}
+

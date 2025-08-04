@@ -11,8 +11,11 @@ class AIToolAdmin(admin.ModelAdmin):
     ordering = ['-date_added']
     
     fieldsets = (
+        ('Owner', {
+            'fields': ('user', )
+        }),
         ('Basic Information', {
-            'fields': ('name', 'description', 'detailed_description', 'category', 'pricing', 'website_url', 'logo_url')
+            'fields': ('tool_ref_num','name', 'description','category', 'pricing', 'website_url', 'logo_url')
         }),
         ('Listing Details', {
             'fields': ('listing_type', 'rating', 'is_active', 'tags', 'features')
@@ -39,35 +42,39 @@ class AIToolAdmin(admin.ModelAdmin):
 def approve_submissions(self, request, queryset):
     """Approve selected submissions and create AI tools"""
     approved_count = queryset.filter(status='pending').update(status='approved')
-    # approved_count = 0
-    # for submission in queryset.filter(status='pending'):
-    #     # Create AI tool from submission
-    #     tool = AITool.objects.create(
-    #         name=submission.tool_name,
-    #         description=submission.tool_description,
-    #         extra_links=submission.extra_links,
-    #         category=submission.tool_category,
-    #         pricing=submission.tool_pricing,
-    #         website_url=submission.tool_website,
-    #         listing_type=submission.listing_type,
-    #         tags=submission.tool_tags,
-    #         features=submission.tool_features,
-    #         contact_name=submission.contact_name,
-    #         contact_email=submission.contact_email,
-    #         contact_company=submission.contact_company,
-    #         is_verified=submission.listing_type in ['verified', 'featured']
-    #     )
+    approved_count = 0
+    print('helo')
+    for submission in queryset.filter(status='ready_to_live'):
+        print("hello")
+        # Create AI tool from submission
+        tool = AITool.objects.create(
+            name=submission.tool_name,
+            tool_ref_num=submission.tool_ref_num,
+            user_timezone=submission.user_timezone,
+            description=submission.tool_description,
+            extra_links=submission.extra_links,
+            category=submission.tool_category,
+            pricing=submission.tool_pricing,
+            website_url=submission.tool_website,
+            listing_type=submission.listing_type,
+            tags=submission.tool_tags,
+            features=submission.tool_features,
+            contact_name=submission.contact_name,
+            contact_email=submission.contact_email,
+            contact_company=submission.contact_company,
+            is_verified=submission.listing_type in ['verified', 'featured']
+        )
         
-    #     if tool.is_verified:
-    #         from django.utils import timezone
-    #         tool.verification_date = timezone.now()
-    #         tool.save()
+        if tool.is_verified:
+            from django.utils import timezone
+            tool.verification_date = timezone.now()
+            tool.save()
         
-    #     # Update submission status
-    #     submission.status = 'approved'
-    #     submission.admin_notes = f'Approved and created as tool ID: {tool.id}'
-    #     submission.save()
-    #     approved_count += 1
+        # Update submission status
+        submission.status = 'approved'
+        submission.admin_notes = f'Approved and created as tool ID: {tool.id}'
+        submission.save()
+        approved_count += 1
     self.message_user(request, f'Successfully approved {approved_count} submissions.')
 
 @admin.action(description="Reject Selected Tools")   

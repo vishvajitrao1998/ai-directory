@@ -1,0 +1,429 @@
+{% extends 'auth/base.html' %}
+
+{% block title %}Sign Up - AI Directory{% endblock %}
+
+{% block menu %}
+{% include 'navbar.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="auth-header">
+    <div class="auth-logo">
+        <i class="fas fa-robot"></i>
+    </div>
+    <h1 class="auth-title">Sign up to Obtain.AI</h1>
+    <p class="auth-subtitle">Join the AI Directory community</p>
+</div>
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+
+<form id="contactUSForms" method="post" novalidate>
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-6">
+            <label for="first_name" class="form-label">First Name</label>
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="fas fa-user"></i>
+                    </span>
+                    <input type="text" 
+                           class="form-control with-icon shadow-none" 
+                           id="first_name" 
+                           name="first_name" 
+                           value="{{ form.first_name.value|default:'' }}"
+                           placeholder="First name"
+                           required>
+                </div>
+            <div class="invalid-feedback">
+                Please provide your name.
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="last_name" class="form-label">Last Name</label>
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="fas fa-user"></i>
+                    </span>
+                    <input type="text" class="form-control with-icon shadow-none" id="last_name" name="last_name"
+                        value="{{ form.last_name.value|default:'' }}" placeholder="Last name" required>
+                </div>
+                {% if form.last_name.errors %}
+                <div class="text-danger small mt-1">
+                    {% for error in form.last_name.errors %}
+                    {{ error }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
+        <div class="input-group">
+            <span class="input-group-text">
+                <i class="fas fa-at"></i>
+            </span>
+            <input type="text" class="form-control with-icon shadow-none" id="username" name="username"
+                value="{{ form.username|default:'' }}" placeholder="Choose a username" required>
+        </div>
+        <small class="text-muted">Username must be 3-30 characters long and contain only letters, numbers, and
+            underscores.</small>
+
+        <p id="username_error"></p>
+        {% if form.username.errors %}
+        <div class="text-danger small mt-1">
+            {% for error in form.username.errors %}
+            {{ error }}
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label for="email" class="form-label">Email Address</label>
+        <div class="input-group">
+            <span class="input-group-text">
+                <i class="fas fa-envelope"></i>
+            </span>
+            <input type="email" class="form-control with-icon shadow-none" id="email" name="email"
+                value="{{ form.email.value|default:'' }}" placeholder="Enter your email address" required>
+        </div>
+        {% if form.email.errors %}
+        <div class="text-danger small mt-1">
+            {% for error in form.email.errors %}
+            {{ error }}
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label for="password1" class="form-label">Password</label>
+        <div class="input-group">
+            <span class="input-group-text">
+                <i class="fas fa-lock"></i>
+            </span>
+            <input type="password" class="form-control with-icon shadow-none" id="password1" name="password1"
+                placeholder="Create a strong password" required>
+            <button type="button" class="password-toggle" onclick="togglePassword('password1', this)">
+                <i class="fas fa-eye"></i>
+            </button>
+        </div>
+        <div class="password-strength mt-2">
+            <div class="progress" style="height: 4px;">
+                <div class="progress-bar" id="password-strength-bar" style="width: 0%"></div>
+            </div>
+            <small class="text-muted" id="password-strength-text">Password strength: Weak</small>
+        </div>
+        {% if form.password1.errors %}
+        <div class="text-danger small mt-1">
+            {% for error in form.password1.errors %}
+            {{ error }}
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label for="password2" class="form-label">Confirm Password</label>
+        <div class="input-group">
+            <span class="input-group-text">
+                <i class="fas fa-lock"></i>
+            </span>
+            <input type="password" class="form-control with-icon shadow-none" id="password2" name="password2"
+                placeholder="Confirm your password" required>
+            <button type="button" class="password-toggle" onclick="togglePassword('password2', this)">
+                <i class="fas fa-eye"></i>
+            </button>
+        </div>
+        {% if form.password2.errors %}
+        <div class="text-danger small mt-1">
+            {% for error in form.password2.errors %}
+            {{ error }}
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="form-check">
+        <input class="form-check-input shadow-none" type="checkbox" id="terms" name="terms" required>
+        <label class="form-check-label" for="terms">
+            I agree to the <a href="#" target="_blank">Terms of Service</a> and
+            <a href="#" target="_blank">Privacy Policy</a>
+        </label>
+    </div>
+
+    <div class="form-check">
+        <input class="form-check-input shadow-none" type="checkbox" id="newsletter" name="newsletter">
+        <label class="form-check-label" for="newsletter">
+            Subscribe to our newsletter for updates and AI tool recommendations
+        </label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        <i class="fas fa-user-plus me-2"></i>Create Account
+    </button>
+</form>
+
+<!-- <div class="auth-divider">
+    <span>or sign up with</span>
+</div>
+
+<button class="btn btn-social">
+    <i class="fab fa-google"></i>Sign up with Google
+</button>
+
+<button class="btn btn-social">
+    <i class="fab fa-github"></i>Sign up with GitHub
+</button> -->
+
+<div class="auth-footer">
+    <p class="text-muted">
+        Already have an account?
+        <a href="/">Sign in here</a>
+    </p>
+</div>
+
+<!-- Toast Container for Alerts -->
+<div class="toast-container"></div>
+{% endblock %}
+
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Auto-focus on first name field
+    document.addEventListener('DOMContentLoaded', function () {
+
+        // Password strength checker
+        document.getElementById('password1').addEventListener('input', function () {
+            const password = this.value;
+            const strengthBar = document.getElementById('password-strength-bar');
+            const strengthText = document.getElementById('password-strength-text');
+
+            let strength = 0;
+            let strengthLabel = 'Weak';
+            let strengthColor = 'bg-danger';
+
+            // Check password criteria
+            if (password.length >= 8) strength += 25;
+            if (/[a-z]/.test(password)) strength += 25;
+            if (/[A-Z]/.test(password)) strength += 25;
+            if (/[0-9]/.test(password)) strength += 25;
+            if (/[^A-Za-z0-9]/.test(password)) strength += 25;
+
+            // Determine strength level
+            if (strength >= 100) {
+                strengthLabel = 'Very Strong';
+                strengthColor = 'bg-success';
+            } else if (strength >= 75) {
+                strengthLabel = 'Strong';
+                strengthColor = 'bg-info';
+            } else if (strength >= 50) {
+                strengthLabel = 'Medium';
+                strengthColor = 'bg-warning';
+            } else if (strength >= 25) {
+                strengthLabel = 'Weak';
+                strengthColor = 'bg-danger';
+            }
+
+            // Update UI
+            strengthBar.style.width = Math.min(strength, 100) + '%';
+            strengthBar.className = 'progress-bar ' + strengthColor;
+            strengthText.textContent = 'Password strength: ' + strengthLabel;
+        });
+
+        // Real-time password confirmation
+        document.getElementById('password2').addEventListener('input', function () {
+            const password1 = document.getElementById('password1').value;
+            const password2 = this.value;
+
+            if (password2 && password1 !== password2) {
+                this.classList.add('is-invalid');
+            } else {
+                this.classList.remove('is-invalid');
+            }
+        });
+
+        // Username availability check (simulated)
+        let usernameTimeout;
+        document.getElementById('username').addEventListener('input', function () {
+            const username = this.value.trim();
+            clearTimeout(usernameTimeout);
+
+            if (username.length >= 3) {
+                usernameTimeout = setTimeout(() => {
+                    // Simulate API call to check username availability
+                    // In real implementation, you would make an AJAX call here
+                    console.log('Checking username availability for:', username);
+                    checking_username(username);
+                }, 500);
+            }
+        });
+
+        // Form validation
+        const contactUSForm = document.getElementById('contactUSForms');
+        if (contactUSForm) {
+            contactUSForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                handleSignupFormSubmit(contactUSForm)
+            });
+        }
+        function checking_username(username) {
+            fetch(`/api/check-username/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    // Include any required data in POST body
+                    username: username  // Make sure `tool_id` is defined
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    let usernameError = document.getElementById("username_error");
+                    if (data.available == true) {
+                        usernameError.innerText = 'Username is available';
+                        usernameError.className = 'text-success fw-bold';
+
+                    } else {
+                        usernameError.innerText = 'Username is not available';
+                        usernameError.className = 'text-danger fw-bold';
+                    }
+                })
+                .catch(error => {
+                    alert(error)
+                    showSubscribeAlert("Failed to load tool info, try again", "bg-danger");
+                });
+        }
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function showError(message) {
+            // Remove existing alerts
+            const existingAlerts = document.querySelectorAll('.alert');
+            existingAlerts.forEach(alert => alert.remove());
+
+            // Create new alert
+            const alert = document.createElement('div');
+            alert.className = 'alert alert-danger';
+            alert.textContent = message;
+
+            // Insert before form
+            const form = document.querySelector('form');
+            form.parentNode.insertBefore(alert, form);
+
+            // Auto-dismiss after 5 seconds
+            setTimeout(() => {
+                alert.style.opacity = '0';
+                setTimeout(() => alert.remove(), 300);
+            }, 5000);
+        }
+
+        function handleSignupFormSubmit(form) {
+            const password1 = document.getElementById('password1').value;
+            const password2 = document.getElementById('password2').value;
+            if (!form.checkValidity()) {
+                form.classList.add('was-validated');
+                return;
+            }
+            else if (!password1 || password1.length < 8) {
+                errorMessage = 'Password must be at least 8 characters long';
+                showErrorAlert(errorMessage);
+            }
+            else if (password1 !== password2) {
+                errorMessage = 'Passwords do not match';
+                showErrorAlert(errorMessage);
+            }
+
+            else {
+                const formData = new FormData(form);
+                fetch(form.action, {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                    },
+                }).then((response) => response.json()).then((data) => {
+                    if (data.success) {
+                        showErrorAlert("Form submitted successfully!");
+                        form.reset();
+                    } else {
+                        showErrorAlert("Submission failed!");
+                    }
+                }).catch((error) => {
+                    console.error("Error:", error);
+                });
+            }
+        }
+        // Function to show success or failure alert
+        function showErrorAlert(message, plan = 'Obtain.AI') {
+            // Create toast element
+            const toastEl = document.createElement('div');
+            toastEl.className = 'toast';
+            toastEl.setAttribute('role', 'alert');
+            toastEl.setAttribute('aria-live', 'assertive');
+            toastEl.setAttribute('aria-atomic', 'true');
+
+            toastEl.innerHTML = `
+            <div class="toast-header bg-danger text-white">
+                <strong class="me-auto text-white">Obtain.AI</strong>
+                <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                <p>${message}.</strong></p>
+            </div>
+        `;
+            // Add toast to container
+            const toastContainer = document.querySelector('.toast-container');
+            toastContainer.appendChild(toastEl);
+
+            // Initialize and show toast
+            const toast = new bootstrap.Toast(toastEl, {
+                autohide: true,
+                delay: 2000
+            });
+            toast.show();
+
+            // Remove toast from DOM after it's hidden
+            toastEl.addEventListener('hidden.bs.toast', function () {
+                toastEl.remove();
+            });
+        };
+    
+        function showSuccessModal(title, message) {
+        // Create modal if it doesn't exist
+        let modal = document.getElementById('successModal');
+        if (!modal) {
+            modal = this.createSuccessModal();
+            document.body.appendChild(modal);
+        }
+
+        // Update content
+        modal.querySelector('.modal-title').textContent = title;
+        modal.querySelector('.modal-body p').textContent = message;
+
+        // Show modal
+        const bsModal = new bootstrap.Modal(modal);
+        bsModal.show();
+    }
+    
+    });
+</script>
+{% endblock %}
